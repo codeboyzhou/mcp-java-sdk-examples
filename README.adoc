@@ -148,3 +148,24 @@ public class McpSyncStdioServer {
 
 }
 ----
+
+== Usage with MCP Client
+
+You can use any MCP client or IDEs and plugins like `Cursor` / `Cline` to interact with MCP server.
+
+Please NOTE that you need to pre-install *JDK 17+* and set the `JAVA_HOME` environment variable to run the MCP server.
+
+[source,json]
+----
+{
+  "mcpServers": {
+    "MCP Java SDK Server Example": {
+      "command": "java",
+      "args": [
+        "-jar",
+        "${your jar path}/mcp-java-sdk-examples-1.0.0-SNAPSHOT.jar"
+      ]
+    }
+  }
+}
+----
