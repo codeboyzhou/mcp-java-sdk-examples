@@ -1,0 +1,150 @@
+= MCP Server Examples
+
+Built with native MCP Java SDK (No Any Spring Framework dependencies).
+
+== Requirements
+- Java 17 or later
+
+== What is MCP?
+
+The https://modelcontextprotocol.io[Model Context Protocol (MCP)] lets you build servers that expose data and functionality to LLM applications in a secure, standardized way. Think of it like a web API, but specifically designed for LLM interactions. MCP servers can:
+
+- Expose data through **Resources** (think of these sort of like GET endpoints; they are used to load information into the LLM's context)
+- Provide functionality through **Tools** (sort of like POST endpoints; they are used to execute code or otherwise produce a side effect)
+- Define interaction patterns through **Prompts** (reusable templates for LLM interactions)
+- And more!
+
+You can start exploring everything about *MCP* from https://modelcontextprotocol.io[here].
+
+== Examples
+
+=== Simple MCP Sync Stdio Server
+
+This example demonstrates how to create a simple MCP server that exposes a resource, a prompt, and a tool.
+
+Click https://github.com/codeboyzhou/mcp-java-sdk-examples/blob/main/src/main/java/com/github/mcp/examples/McpSyncStdioServer.java[here] if you want to get complete code directly.
+
+[source,java]
+----
+public class McpSyncStdioServer {
+
+    private McpSyncServer mcpSyncServer;
+
+    public static void main(String[] args) {
+        McpSyncStdioServer server = new McpSyncStdioServer();
+        server.initialize();
+        server.addResource();
+        server.addPrompt();
+        server.addTool();
+    }
+
+    public void initialize() {
+        McpSchema.ServerCapabilities serverCapabilities = McpSchema.ServerCapabilities.builder()
+            .logging()
+            .tools(true)
+            .prompts(true)
+            .resources(false, true)
+            .build();
+
+        mcpSyncServer = McpServer.sync(new StdioServerTransportProvider())
+            .serverInfo("MCP Stdio Server: Built with native MCP Java SDK (No Spring)", "1.0.0")
+            .capabilities(serverCapabilities)
+            .build();
+
+        mcpSyncServer.loggingNotification(McpSchema.LoggingMessageNotification.builder()
+            .level(McpSchema.LoggingLevel.INFO)
+            .logger("MCP Stdio Server")
+            .data("MCP Stdio Server Started")
+            .build()
+        );
+    }
+
+    public void addResource() {
+        McpSchema.Resource resource = new McpSchema.Resource(
+            "system://variables",
+            "Environment Variables",
+            "Provides access to all environment variables from the MCP server's underlying host system.",
+            "text/plain",
+            new McpSchema.Annotations(List.of(McpSchema.Role.ASSISTANT, McpSchema.Role.USER), 1.0)
+        );
+
+        McpServerFeatures.SyncResourceSpecification resourceSpec = new McpServerFeatures.SyncResourceSpecification(resource,
+            (exchange, request) -> {
+                McpSchema.ResourceContents contents = new McpSchema.TextResourceContents(
+                    resource.uri(), resource.mimeType(), System.getenv().toString()
+                );
+                return new McpSchema.ReadResourceResult(List.of(contents));
+            }
+        );
+
+        mcpSyncServer.addResource(resourceSpec);
+    }
+
+    public void addPrompt() {
+        McpSchema.PromptArgument argument = new McpSchema.PromptArgument(
+            "runtime",
+            "Specify a runtime keyword, LLMs will locate its complete installation dir.",
+            true
+        );
+        McpSchema.Prompt prompt = new McpSchema.Prompt(
+            "Runtime Installation Dir Finder",
+            "Use LLMs to identify the exact installation location for the target runtime.",
+            List.of(argument)
+        );
+
+        McpServerFeatures.SyncPromptSpecification promptSpec = new McpServerFeatures.SyncPromptSpecification(prompt,
+            (exchange, request) -> {
+                Map<String, Object> arguments = request.arguments();
+                McpSchema.TextContent content = new McpSchema.TextContent(
+                    String.format("Where is %s installed on this server", arguments.get("runtime"))
+                );
+                McpSchema.PromptMessage message = new McpSchema.PromptMessage(McpSchema.Role.USER, content);
+                return new McpSchema.GetPromptResult(prompt.description(), List.of(message));
+            }
+        );
+
+        mcpSyncServer.addPrompt(promptSpec);
+    }
+
+    public void addTool() {
+        final String argumentsJsonSchema = """
+                {
+                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "type": "object",
+                    "properties": {
+                        "runtime": {
+                            "type": "string",
+                            "description": "You can tell LLMs a runtime and attempt to locate its installation dir",
+                            "minLength": 1
+                        }
+                    },
+                    "required": [
+                        "runtime"
+                    ]
+                }
+            """;
+
+        McpSchema.Tool tool = new McpSchema.Tool(
+            "Runtime Installation Dir Finder",
+            "Identify the installation dir for the specified runtime via LLMs.",
+            argumentsJsonSchema
+        );
+
+        McpServerFeatures.SyncToolSpecification toolSpec = new McpServerFeatures.SyncToolSpecification(tool,
+            (exchange, arguments) -> {
+                final String runtime = arguments.get("runtime").toString();
+                String[] pathVariables = System.getenv("PATH").split(";");
+                final String result = Arrays.stream(pathVariables)
+                    .filter(v -> v.toLowerCase().contains(runtime))
+                    .findFirst()
+                    .orElse(String.format("Not found %s on this server", runtime));
+                McpSchema.Content content = new McpSchema.TextContent(result);
+                return new McpSchema.CallToolResult(List.of(content), false);
+            }
+        );
+
+        mcpSyncServer.addTool(toolSpec);
+    }
+
+}
+----
