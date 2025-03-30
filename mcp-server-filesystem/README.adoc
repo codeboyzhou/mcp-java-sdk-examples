@@ -1,0 +1,48 @@
+= Filesystem MCP Server
+
+Java server implementing Model Context Protocol (MCP) for filesystem operations.
+
+== Features
+
+- Read/write files from the local filesystem.
+
+== API
+
+=== Resources
+
+- `file://system`: File system operations interface
+
+=== Tools
+
+- *read_file*
+  * Read complete contents of a file
+  * Input: `path` (string)
+  * Reads complete file contents with UTF-8 encoding
+
+== Usage with MCP Client
+
+You can use any MCP clients or IDEs and plugins like `Cursor` / `Cline` to interact with MCP server.
+
+=== Build
+
+[source,bash]
+----
+mvn clean package
+----
+
+=== Configuration
+
+[source,json]
+----
+{
+  "mcpServers": {
+    "mcp-server-filesystem": {
+      "command": "java",
+      "args": [
+        "-jar",
+        "${your_jar_path}/mcp-server-filesystem.jar"
+      ]
+    }
+  }
+}
+----
