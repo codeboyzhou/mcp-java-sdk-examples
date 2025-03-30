@@ -21,7 +21,7 @@ Java server implementing Model Context Protocol (MCP) for filesystem operations.
 
 == Usage with MCP Client
 
-You can use any MCP clients or IDEs and plugins like `Cursor` / `Cline` to interact with MCP server.
+You can use any MCP client such as Cursor (IDE) or Cline (VS Code plugin) to interact with MCP server.
 
 === Build
 

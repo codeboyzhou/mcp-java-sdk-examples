@@ -96,7 +96,7 @@ public class McpSyncServerFileSystem {
     private void addFileReadingTool() throws IOException {
         System.err.println("Adding tool: read_file");
 
-        final String schema = FileHelper.readAsString("file-reading-tool-input-json-schema.json");
+        final String schema = FileHelper.readResourceAsString("file-reading-tool-input-json-schema.json");
         McpSchema.Tool tool = new McpSchema.Tool("read_file", "Read complete contents of a file.", schema);
         McpServerFeatures.SyncToolSpecification fileReadingTool = new McpServerFeatures.SyncToolSpecification(
             tool,
@@ -112,10 +112,12 @@ public class McpSyncServerFileSystem {
                     result = String.format("No content available because %s is a directory", path);
                 } else {
                     try {
-                        result = FileHelper.readAsString(path);
+                        result = FileHelper.readAsString(filepath);
                     } catch (IOException e) {
-                        result = e.getMessage();
                         isError = true;
+                        result = e + ": " + e.getMessage();
+                        System.err.println("Error reading file: " + path);
+                        e.printStackTrace(System.err);
                     }
                 }
 
