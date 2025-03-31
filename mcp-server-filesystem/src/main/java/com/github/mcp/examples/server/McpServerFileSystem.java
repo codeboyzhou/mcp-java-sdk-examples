@@ -17,7 +17,7 @@ import java.util.Map;
  *
  * @author codeboyzhou
  */
-public class McpSyncServerFileSystem {
+public class McpServerFileSystem {
     /**
      * The name of the MCP server.
      */
@@ -230,7 +230,7 @@ public class McpSyncServerFileSystem {
      */
     public static void main(String[] args) {
         // Initialize MCP server
-        McpSyncServerFileSystem filesystemMcpServer = new McpSyncServerFileSystem();
+        McpServerFileSystem filesystemMcpServer = new McpServerFileSystem();
         filesystemMcpServer.initialize();
         // Add MCP server resources
         filesystemMcpServer.addFileSystemResource();
