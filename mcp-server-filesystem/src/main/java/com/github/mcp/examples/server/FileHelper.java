@@ -12,6 +12,7 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.joining;
 
@@ -30,6 +31,16 @@ public final class FileHelper {
 
     public static String readAsString(Path filepath) throws IOException {
         return Files.readAllLines(filepath).stream().collect(joining(System.lineSeparator()));
+    }
+
+    public static List<String> listFiles(Path dirpath, String fileExtensionFilter) throws IOException {
+        try (Stream<Path> stream = Files.list(dirpath)) {
+            Stream<String> names = stream.filter(Files::isRegularFile).map(Path::getFileName).map(Path::toString);
+            if (fileExtensionFilter == null || fileExtensionFilter.isBlank()) {
+                return names.toList();
+            }
+            return names.filter(name -> name.endsWith(fileExtensionFilter)).toList();
+        }
     }
 
     public static final class AccessControl {

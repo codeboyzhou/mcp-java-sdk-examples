@@ -133,7 +133,8 @@ public class McpSyncServerFileSystem {
         System.err.println("Adding tool: read_file");
 
         final String schema = FileHelper.readResourceAsString("file-reading-tool-input-json-schema.json");
-        McpSchema.Tool tool = new McpSchema.Tool("read_file", "Read complete contents of a file.", schema);
+        McpSchema.Tool tool = new McpSchema
+            .Tool("read_file", "Read complete contents of a file.", schema);
         McpServerFeatures.SyncToolSpecification fileReadingTool = new McpServerFeatures.SyncToolSpecification(
             tool,
             (exchange, arguments) -> {
@@ -170,6 +171,61 @@ public class McpSyncServerFileSystem {
     }
 
     /**
+     * Adds a tool to the MCP server that enumerates directory files with extension-based filtering.
+     * <p>
+     * Arguments:
+     * path (string): The path to the directory to enumerate.
+     * fileExtensionFilter (string): The file extension filter to apply.
+     * <p>
+     * Returns:
+     * result (string): A list of file names with the specified extension.
+     *
+     * @throws IOException if there is an error reading the directory.
+     */
+    public void addDirReadingTool() throws IOException {
+        System.err.println("Adding tool: read_dir");
+
+        final String schema = FileHelper.readResourceAsString("dir-reading-tool-input-json-schema.json");
+        McpSchema.Tool tool = new McpSchema
+            .Tool("read_dir", "Enumerate directory files with extension-based filtering.", schema);
+        McpServerFeatures.SyncToolSpecification dirReadingTool = new McpServerFeatures.SyncToolSpecification(
+            tool,
+            (exchange, arguments) -> {
+                final String path = arguments.get("path").toString();
+                final String fileExtensionFilter = arguments.get("fileExtensionFilter").toString();
+                Path dirpath = Path.of(path);
+                boolean isError = false;
+                String result;
+
+                if (Files.notExists(dirpath)) {
+                    result = String.format("%s does not exist. No files available.", path);
+                } else if (Files.isRegularFile(dirpath)) {
+                    result = String.format("%s is not a directory. No files available.", path);
+                } else if (FileHelper.AccessControl.checkReadableConfiguration(dirpath)) {
+                    try {
+                        List<String> filenames = FileHelper.listFiles(dirpath, fileExtensionFilter);
+                        result = String.join(System.lineSeparator(), filenames);
+                    } catch (IOException e) {
+                        isError = true;
+                        result = e + ": " + e.getMessage();
+                        System.err.println("Error reading directory: " + path);
+                        e.printStackTrace(System.err);
+                    }
+                } else {
+                    result = String.format("Access to %s is denied. No files available.", path);
+                }
+
+                McpSchema.Content content = new McpSchema.TextContent(result);
+                return new McpSchema.CallToolResult(List.of(content), isError);
+            }
+        );
+
+        server.addTool(dirReadingTool);
+
+        System.err.println("Tool added: " + tool.name());
+    }
+
+    /**
      * Main entry point for the MCP server on STDIO.
      */
     public static void main(String[] args) {
@@ -183,6 +239,7 @@ public class McpSyncServerFileSystem {
         // Add MCP server tools
         try {
             filesystemMcpServer.addFileReadingTool();
+            filesystemMcpServer.addDirReadingTool();
         } catch (IOException e) {
             // We are in STDIO mode, so logging is unavailable and messages are output to STDERR only
             System.err.println("Error calling addFileReadingTool()");
