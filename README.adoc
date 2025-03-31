@@ -20,4 +20,6 @@ You can start exploring everything about *MCP* from https://modelcontextprotocol
 
 These servers aim to demonstrate MCP features and the MCP Java SDK.
 
+If you are looking for servers implemented with Typescript MCP SDK or Python MCP SDK, see https://github.com/modelcontextprotocol/servers[here].
+
 - https://github.com/codeboyzhou/mcp-java-sdk-examples/blob/main/mcp-server-filesystem/README.adoc[Filesystem] - Secure file operations with configurable access controls

@@ -6,6 +6,8 @@ Java server implementing Model Context Protocol (MCP) for filesystem operations.
 
 - Read/write files from the local filesystem.
 
+*Note*: The server will only allow operations within directories specified via `env`.
+
 == API
 
 === Resources
@@ -32,6 +34,11 @@ mvn clean package
 
 === Configuration
 
+*Note*: The `env` configuration is optional for access control.
+
+`readable`: Read access control with regular expressions, format example: `["^/var/log/(app|sys)\.log$"]`.
+`writable`: Write access control with regular expressions, format example: `["^/var/log/(app|sys)\.log$"]`.
+
 [source,json]
 ----
 {
@@ -41,7 +48,13 @@ mvn clean package
       "args": [
         "-jar",
         "${your_jar_path}/mcp-server-filesystem.jar"
-      ]
+      ],
+      "env": {
+        "permission": {
+          "readable": [],
+          "writable": []
+        }
+      }
     }
   }
 }
