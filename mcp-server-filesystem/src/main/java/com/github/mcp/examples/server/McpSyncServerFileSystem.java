@@ -107,10 +107,10 @@ public class McpSyncServerFileSystem {
                 String result;
 
                 if (Files.notExists(filepath)) {
-                    result = String.format("No content available because %s does not exist", path);
+                    result = String.format("%s does not exist. No content available.", path);
                 } else if (Files.isDirectory(filepath)) {
-                    result = String.format("No content available because %s is a directory", path);
-                } else {
+                    result = String.format("%s is a directory. No content available.", path);
+                } else if (FileHelper.AccessControl.checkReadAccessConfiguration(filepath)) {
                     try {
                         result = FileHelper.readAsString(filepath);
                     } catch (IOException e) {
@@ -119,6 +119,8 @@ public class McpSyncServerFileSystem {
                         System.err.println("Error reading file: " + path);
                         e.printStackTrace(System.err);
                     }
+                } else {
+                    result = String.format("Access to %s is denied. No content available.", path);
                 }
 
                 McpSchema.Content content = new McpSchema.TextContent(result);
