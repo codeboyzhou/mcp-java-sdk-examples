@@ -37,6 +37,7 @@ mvn clean package
 *Note*: The `env` configuration is optional for access control.
 
 `readable`: Read access control with regular expressions, format example: `["^/var/log/(app|sys)\.log$"]`.
+
 `writable`: Write access control with regular expressions, format example: `["^/var/log/(app|sys)\.log$"]`.
 
 [source,json]
