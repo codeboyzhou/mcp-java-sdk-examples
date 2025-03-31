@@ -36,48 +36,48 @@ public final class FileHelper {
 
         private static final ObjectMapper json = new ObjectMapper();
 
-        private record Access(Read read, Write write) {
+        private record Permission(List<String> readable, List<String> writable) {
 
         }
 
-        private record Read(List<String> allowed, List<String> denied) {
-
-        }
-
-        private record Write(List<String> allowed, List<String> denied) {
-
-        }
-
-        public static boolean checkReadAccessConfiguration(Path filepath) {
-            final String fileAccessConfiguration = System.getenv().get("access");
-            if (fileAccessConfiguration == null || fileAccessConfiguration.isBlank()) {
-                return false;
+        public static boolean checkReadableConfiguration(Path filepath) {
+            final String permissionConfig = System.getenv().get("permission");
+            if (permissionConfig == null || permissionConfig.isBlank()) {
+                System.err.println("WARNING: No permission configurations detected, all files readable by default.");
+                return true;
             }
 
+            Permission permission;
             try {
-                Access access = json.readValue(fileAccessConfiguration, Access.class);
-                if (access.read == null) {
-                    return false;
-                }
-                if (access.read.allowed == null && access.read.denied == null) {
-                    return false;
-                }
-
-                if (access.read.allowed != null) {
-                    for (String regex : access.read.allowed) {
-                        return Pattern.compile(regex).matcher(filepath.toString()).matches();
-                    }
-                }
-
-                if (access.read.denied != null) {
-                    for (String regex : access.read.denied) {
-                        return !Pattern.compile(regex).matcher(filepath.toString()).matches();
-                    }
-                }
+                permission = json.readValue(permissionConfig, Permission.class);
             } catch (JsonProcessingException e) {
+                System.err.println("Invalid permission configuration: " + permissionConfig);
+                e.printStackTrace(System.err);
                 return false;
             }
 
+            if (permission.readable == null) {
+                System.err.println("WARNING: No read permission configurations detected, all files readable by default.");
+                return true;
+            }
+
+            return checkPermissions(filepath.toString(), permission.readable);
+        }
+
+        private static boolean checkPermissions(String filepath, List<String> permissions) {
+            for (String regex : permissions) {
+                try {
+                    if (Pattern.compile(regex).matcher(filepath).matches()) {
+                        return true;
+                    }
+                } catch (IllegalArgumentException e) {
+                    // Skip invalid regex patterns
+                    System.err.println("Skipping invalid regex pattern: " + regex);
+                    e.printStackTrace(System.err);
+                }
+            }
+
+            // Default deny - if no rules match, access is denied
             return false;
         }
 

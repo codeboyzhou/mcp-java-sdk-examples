@@ -110,7 +110,7 @@ public class McpSyncServerFileSystem {
                     result = String.format("%s does not exist. No content available.", path);
                 } else if (Files.isDirectory(filepath)) {
                     result = String.format("%s is a directory. No content available.", path);
-                } else if (FileHelper.AccessControl.checkReadAccessConfiguration(filepath)) {
+                } else if (FileHelper.AccessControl.checkReadableConfiguration(filepath)) {
                     try {
                         result = FileHelper.readAsString(filepath);
                     } catch (IOException e) {
