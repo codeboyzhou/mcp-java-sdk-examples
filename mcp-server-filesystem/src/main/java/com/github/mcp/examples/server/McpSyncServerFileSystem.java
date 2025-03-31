@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Java server implementing Model Context Protocol (MCP) for filesystem operations.
@@ -82,6 +83,41 @@ public class McpSyncServerFileSystem {
     }
 
     /**
+     * Adds a prompt to the MCP server that to assist to read file.
+     * <p>
+     * Arguments:
+     * filepath (string): The path to the file to read.
+     * <p>
+     * Returns:
+     * result (string): The prompt message like "What is the content of this file: /path/to/file.txt"
+     */
+    public void addFileReadingPrompt() {
+        System.err.println("Adding prompt: read_file");
+
+        McpSchema.PromptArgument argument = new McpSchema
+            .PromptArgument("filepath", "The path to the file to read", true);
+
+        McpSchema.Prompt prompt = new McpSchema
+            .Prompt("read_file", "Read complete contents of a file.", List.of(argument));
+
+        McpServerFeatures.SyncPromptSpecification fileReadingPrompt = new McpServerFeatures.SyncPromptSpecification(
+            prompt,
+            (exchange, request) -> {
+                Map<String, Object> arguments = request.arguments();
+                McpSchema.TextContent content = new McpSchema.TextContent(
+                    String.format("What is the content of this file: %s", arguments.get("filepath"))
+                );
+                McpSchema.PromptMessage message = new McpSchema.PromptMessage(McpSchema.Role.USER, content);
+                return new McpSchema.GetPromptResult(prompt.description(), List.of(message));
+            }
+        );
+
+        server.addPrompt(fileReadingPrompt);
+
+        System.err.println("Prompt added: " + prompt.name());
+    }
+
+    /**
      * Adds a tool to the MCP server that reads the contents of a file.
      * <p>
      * Arguments:
@@ -128,7 +164,6 @@ public class McpSyncServerFileSystem {
             }
         );
 
-
         server.addTool(fileReadingTool);
 
         System.err.println("Tool added: " + tool.name());
@@ -143,6 +178,8 @@ public class McpSyncServerFileSystem {
         filesystemMcpServer.initialize();
         // Add MCP server resources
         filesystemMcpServer.addFileSystemResource();
+        // Add MCP server prompts
+        filesystemMcpServer.addFileReadingPrompt();
         // Add MCP server tools
         try {
             filesystemMcpServer.addFileReadingTool();
