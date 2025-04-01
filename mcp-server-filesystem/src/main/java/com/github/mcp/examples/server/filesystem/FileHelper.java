@@ -1,4 +1,4 @@
-package com.github.mcp.examples.server;
+package com.github.mcp.examples.server.filesystem;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,13 +33,13 @@ public final class FileHelper {
         return Files.readAllLines(filepath).stream().collect(joining(System.lineSeparator()));
     }
 
-    public static List<String> listFiles(Path dirpath, String fileExtensionFilter) throws IOException {
+    public static List<String> listFiles(Path dirpath, String fileNamePattern) throws IOException {
         try (Stream<Path> stream = Files.list(dirpath)) {
             Stream<String> names = stream.filter(Files::isRegularFile).map(Path::getFileName).map(Path::toString);
-            if (fileExtensionFilter == null || fileExtensionFilter.isBlank()) {
+            if (fileNamePattern == null || fileNamePattern.isBlank()) {
                 return names.toList();
             }
-            return names.filter(name -> name.endsWith(fileExtensionFilter)).toList();
+            return names.filter(name -> Pattern.compile(fileNamePattern).matcher(name).find()).toList();
         }
     }
 
@@ -78,7 +78,7 @@ public final class FileHelper {
         private static boolean checkPermissions(String filepath, List<String> permissions) {
             for (String regex : permissions) {
                 try {
-                    if (Pattern.compile(regex).matcher(filepath).matches()) {
+                    if (Pattern.compile(regex).matcher(filepath).find()) {
                         return true;
                     }
                 } catch (IllegalArgumentException e) {
