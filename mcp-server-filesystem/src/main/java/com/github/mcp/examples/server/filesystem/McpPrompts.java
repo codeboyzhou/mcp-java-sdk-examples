@@ -25,12 +25,12 @@ public final class McpPrompts {
      *
      * @return A specification for the MCP prompt.
      */
-    public static McpServerFeatures.SyncPromptSpecification fileReadingPrompt() {
-        McpSchema.PromptArgument argument = new McpSchema
+    public static McpServerFeatures.SyncPromptSpecification readFile() {
+        McpSchema.PromptArgument filepath = new McpSchema
             .PromptArgument("filepath", "The path to the file to read", true);
 
         McpSchema.Prompt prompt = new McpSchema
-            .Prompt("read_file", "Read complete contents of a file.", List.of(argument));
+            .Prompt("read_file", "Read complete contents of a file.", List.of(filepath));
 
         return new McpServerFeatures.SyncPromptSpecification(
             prompt,
@@ -46,21 +46,19 @@ public final class McpPrompts {
     }
 
     /**
-     * Create a new prompt to the MCP server that to assist to read directory.
+     * Create a new prompt to the MCP server that to assist to list files of a directory.
      *
      * @return A specification for the MCP prompt.
      */
-    public static McpServerFeatures.SyncPromptSpecification dirReadingPrompt() {
-        McpSchema.PromptArgument dirPath = new McpSchema
-            .PromptArgument("dirPath", "The path to the dir to read", true);
+    public static McpServerFeatures.SyncPromptSpecification listFiles() {
+        McpSchema.PromptArgument directoryPath = new McpSchema
+            .PromptArgument("directoryPath", "The path to the directory to read", true);
         McpSchema.PromptArgument fileNamePattern = new McpSchema
             .PromptArgument("fileNamePattern", "Regular expression to filter files", false);
 
-        McpSchema.Prompt prompt = new McpSchema.Prompt(
-            "read_dir",
-            "Enumerate directory files with name-based filtering.",
-            List.of(dirPath, fileNamePattern)
-        );
+        List<McpSchema.PromptArgument> args = List.of(directoryPath, fileNamePattern);
+        McpSchema.Prompt prompt = new McpSchema
+            .Prompt("list_files", "List directory files with name-based filtering.", args);
 
         return new McpServerFeatures.SyncPromptSpecification(
             prompt,
@@ -69,7 +67,7 @@ public final class McpPrompts {
                 McpSchema.TextContent content = new McpSchema.TextContent(
                     String.format(
                         "What is the list of files in this directory: %s, with file name pattern: %s",
-                        arguments.get("dirPath"),
+                        arguments.get("directoryPath"),
                         arguments.get("fileNamePattern")
                     )
                 );
@@ -85,8 +83,8 @@ public final class McpPrompts {
      * @param server The MCP server to add prompts to.
      */
     public static void addAllTo(McpSyncServer server) {
-        server.addPrompt(fileReadingPrompt());
-        server.addPrompt(dirReadingPrompt());
+        server.addPrompt(readFile());
+        server.addPrompt(listFiles());
     }
 
 }

@@ -4,7 +4,8 @@ Java server implementing Model Context Protocol (MCP) for filesystem operations.
 
 == Features
 
-- Read file / Enumerate directory files from the local filesystem.
+- Read file from the local filesystem.
+- List files of a directory from the local filesystem.
 
 *Note*: The server will only allow operations within directories specified via `env`.
 
@@ -21,10 +22,10 @@ Java server implementing Model Context Protocol (MCP) for filesystem operations.
   * Input: `path` (string)
   * Read complete file contents with UTF-8 encoding
 
-- *read_dir*
+- *list_files*
   * List files of a directory
-  * Input: `path` (string), `fileNamePattern` (string)
-  * Enumerate directory files with name-based filtering
+  * Input: `directoryPath` (string), `fileNamePattern` (string)
+  * List files of a directory with name-based filtering
 
 === Prompt
 
@@ -33,10 +34,10 @@ Java server implementing Model Context Protocol (MCP) for filesystem operations.
   * Input: `filepath` (string)
   * Output: What is the content of this file: `<filepath>`
 
-- *read_dir*
-  * For `read_dir` tool
-  * Input: `dirPath` (string), `fileNamePattern` (string)
-  * Output: What is the list of files in this directory: `<dirPath>`, with file name pattern: `<fileNamePattern>`
+- *list_files*
+  * For `list_files` tool
+  * Input: `directoryPath` (string), `fileNamePattern` (string)
+  * Output: What is the list of files in this directory: `<directoryPath>`, with file name pattern: `<fileNamePattern>`
 
 == Usage with MCP Client
 
