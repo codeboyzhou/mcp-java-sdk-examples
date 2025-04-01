@@ -46,7 +46,7 @@ public final class McpPrompts {
     }
 
     /**
-     * Create a new prompt to the MCP server that to assist to list files of a directory.
+     * Create a new prompt to the MCP server that to assist to list files of a directory non-recursively.
      *
      * @return A specification for the MCP prompt.
      */
@@ -57,8 +57,11 @@ public final class McpPrompts {
             .PromptArgument("fileNamePattern", "Regular expression to filter files", false);
 
         List<McpSchema.PromptArgument> args = List.of(directoryPath, fileNamePattern);
-        McpSchema.Prompt prompt = new McpSchema
-            .Prompt("list_files", "List directory files with name-based filtering.", args);
+        McpSchema.Prompt prompt = new McpSchema.Prompt(
+            "list_files",
+            "List directory files non-recursively with name-based filtering.",
+            args
+        );
 
         return new McpServerFeatures.SyncPromptSpecification(
             prompt,
@@ -66,7 +69,7 @@ public final class McpPrompts {
                 Map<String, Object> arguments = request.arguments();
                 McpSchema.TextContent content = new McpSchema.TextContent(
                     String.format(
-                        "What is the list of files in this directory: %s, with file name pattern: %s",
+                        "What is the list of files in this directory (non-recursive): %s, with file name pattern: %s",
                         arguments.get("directoryPath"),
                         arguments.get("fileNamePattern")
                     )

@@ -67,7 +67,7 @@ public final class McpTools {
     }
 
     /**
-     * Create a new tool to the MCP server that list files of a directory with name-based filtering.
+     * Create a new tool to the MCP server that list files of a directory non-recursively with name-based filtering.
      * <p>
      * Arguments:
      * directoryPath (string): The path to the directory to read.
@@ -82,8 +82,11 @@ public final class McpTools {
     public static McpServerFeatures.SyncToolSpecification listFiles() throws IOException {
         final String schema = FileHelper.readResourceAsString("list-files-tool-input-json-schema.json");
 
-        McpSchema.Tool tool = new McpSchema
-            .Tool("list_files", "List files of a directory with name-based filtering.", schema);
+        McpSchema.Tool tool = new McpSchema.Tool(
+            "list_files",
+            "List files of a directory non-recursively with name-based filtering.",
+            schema
+        );
 
         return new McpServerFeatures.SyncToolSpecification(
             tool,
@@ -101,7 +104,11 @@ public final class McpTools {
                 } else if (FileHelper.AccessControl.checkReadableConfiguration(dirpath)) {
                     try {
                         List<String> filenames = FileHelper.listFiles(dirpath, fileNamePattern);
-                        result = String.join(System.lineSeparator(), filenames);
+                        if (filenames.isEmpty()) {
+                            result = "Target file not found in this directory: " + directoryPath;
+                        } else {
+                            result = String.join(System.lineSeparator(), filenames);
+                        }
                     } catch (IOException e) {
                         isError = true;
                         result = e + ": " + e.getMessage();

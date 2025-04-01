@@ -23,7 +23,7 @@ Java server implementing Model Context Protocol (MCP) for filesystem operations.
   * Read complete file contents with UTF-8 encoding
 
 - *list_files*
-  * List files of a directory
+  * List files of a directory non-recursively
   * Input: `directoryPath` (string), `fileNamePattern` (string)
   * List files of a directory with name-based filtering
 
@@ -37,7 +37,7 @@ Java server implementing Model Context Protocol (MCP) for filesystem operations.
 - *list_files*
   * For `list_files` tool
   * Input: `directoryPath` (string), `fileNamePattern` (string)
-  * Output: What is the list of files in this directory: `<directoryPath>`, with file name pattern: `<fileNamePattern>`
+  * Output: What is the list of files in this directory (non-recursive): `<directoryPath>`, with file name pattern: `<fileNamePattern>`
 
 == Usage with MCP Client
 
