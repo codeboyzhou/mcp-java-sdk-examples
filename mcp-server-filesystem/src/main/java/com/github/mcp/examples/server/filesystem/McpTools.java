@@ -1,5 +1,7 @@
 package com.github.mcp.examples.server.filesystem;
 
+import com.github.mcp.examples.server.filesystem.util.FileAccessHelper;
+import com.github.mcp.examples.server.filesystem.util.FileOperationHelper;
 import io.modelcontextprotocol.server.McpServerFeatures;
 import io.modelcontextprotocol.server.McpSyncServer;
 import io.modelcontextprotocol.spec.McpSchema;
@@ -17,20 +19,21 @@ import java.util.List;
 public final class McpTools {
 
     /**
-     * Create a new tool to the MCP server that reads the contents of a file.
+     * Create a new tool to the MCP server that to read the contents of a file.
      * <p>
      * Arguments:
+     * <p>
      * path (string): The path to the file to read.
      * <p>
      * Returns:
      * result (string): The contents of the file.
-     * If the file does not exist or is a directory, an error message is returned.
+     * If the path does not exist or is a directory, an error message will return.
      *
      * @return A specification for the MCP tool.
      * @throws IOException if there is an error reading the file.
      */
     public static McpServerFeatures.SyncToolSpecification readFile() throws IOException {
-        final String schema = FileHelper.readResourceAsString("read-file-tool-input-json-schema.json");
+        final String schema = FileOperationHelper.readResourceAsString("read-file-tool-input-json-schema.json");
 
         McpSchema.Tool tool = new McpSchema
             .Tool("read_file", "Read complete contents of a file.", schema);
@@ -47,9 +50,9 @@ public final class McpTools {
                     result = String.format("%s does not exist. No content available.", path);
                 } else if (Files.isDirectory(filepath)) {
                     result = String.format("%s is a directory. No content available.", path);
-                } else if (FileHelper.AccessControl.checkReadableConfiguration(filepath)) {
+                } else if (FileAccessHelper.checkReadableConfiguration(filepath)) {
                     try {
-                        result = FileHelper.readAsString(filepath);
+                        result = FileOperationHelper.readAsString(filepath);
                     } catch (IOException e) {
                         isError = true;
                         result = e + ": " + e.getMessage();
@@ -67,24 +70,30 @@ public final class McpTools {
     }
 
     /**
-     * Create a new tool to the MCP server that list files of a directory non-recursively with name-based filtering.
+     * Create a new tool to the MCP server that to list files of a directory with name-based filtering and recursion option.
      * <p>
-     * Arguments:
+     * Required Arguments:
+     * <p>
      * directoryPath (string): The path to the directory to read.
-     * fileNamePattern (string): Regular expression to filter files.
+     * <p>
+     * Optional Arguments:
+     * <p>
+     * fileNamePattern (string): Regular expression to filter files, if it's empty, all files will be listed. Default is empty.
+     * <p>
+     * recursive (boolean): Whether to list files recursively. Default is false.
      * <p>
      * Returns:
-     * result (string): A list of file names.
+     * result (string): A list of file names (paths if 'recursive' is true), or empty string if no files are found.
      *
      * @return A specification for the MCP tool.
      * @throws IOException if there is an error reading the directory.
      */
     public static McpServerFeatures.SyncToolSpecification listFiles() throws IOException {
-        final String schema = FileHelper.readResourceAsString("list-files-tool-input-json-schema.json");
+        final String schema = FileOperationHelper.readResourceAsString("list-files-tool-input-json-schema.json");
 
         McpSchema.Tool tool = new McpSchema.Tool(
             "list_files",
-            "List files of a directory non-recursively with name-based filtering.",
+            "List files of a directory with name-based filtering and recursion option.",
             schema
         );
 
@@ -93,17 +102,18 @@ public final class McpTools {
             (exchange, arguments) -> {
                 final String directoryPath = arguments.get("directoryPath").toString();
                 final String fileNamePattern = arguments.getOrDefault("fileNamePattern", "").toString();
-                Path dirpath = Path.of(directoryPath);
+                final boolean recursive = arguments.getOrDefault("recursive", false).equals(true);
+                Path path = Path.of(directoryPath);
                 boolean isError = false;
                 String result;
 
-                if (Files.notExists(dirpath)) {
+                if (Files.notExists(path)) {
                     result = String.format("%s does not exist. No files available.", directoryPath);
-                } else if (Files.isRegularFile(dirpath)) {
+                } else if (Files.isRegularFile(path)) {
                     result = String.format("%s is not a directory. No files available.", directoryPath);
-                } else if (FileHelper.AccessControl.checkReadableConfiguration(dirpath)) {
+                } else if (FileAccessHelper.checkReadableConfiguration(path)) {
                     try {
-                        List<String> filenames = FileHelper.listFiles(dirpath, fileNamePattern);
+                        List<String> filenames = FileOperationHelper.listFiles(path, fileNamePattern, recursive);
                         if (filenames.isEmpty()) {
                             result = "Target file not found in this directory: " + directoryPath;
                         } else {

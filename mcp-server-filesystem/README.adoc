@@ -13,19 +13,23 @@ Java server implementing Model Context Protocol (MCP) for filesystem operations.
 
 === Resources
 
-- `file://system`: File system operations interface
+- `file://system`: File system operations interface.
 
 === Tools
 
 - *read_file*
-  * Read complete contents of a file
-  * Input: `path` (string)
-  * Read complete file contents with UTF-8 encoding
+  * Read complete file contents with UTF-8 encoding.
+  * Input:
+    ** `path` (string): The path to the file to read.
+  * Output: Complete file contents with UTF-8 encoding.
 
 - *list_files*
-  * List files of a directory non-recursively
-  * Input: `directoryPath` (string), `fileNamePattern` (string)
-  * List files of a directory with name-based filtering
+  * List files of a directory with name-based filtering and recursion option.
+  * Input:
+    ** `directoryPath` (string): The path to the directory to read.
+    ** `fileNamePattern` (string): Regular expression to filter files, if it's empty, all files will be listed. Default is empty.
+    ** `recursive` (boolean): Whether to list files recursively. Default is `false`.
+  * Output: A list of file names (paths if 'recursive' is `true`), or empty string if no files are found.
 
 === Prompt
 
@@ -36,8 +40,11 @@ Java server implementing Model Context Protocol (MCP) for filesystem operations.
 
 - *list_files*
   * For `list_files` tool
-  * Input: `directoryPath` (string), `fileNamePattern` (string)
-  * Output: What is the list of files in this directory (non-recursive): `<directoryPath>`, with file name pattern: `<fileNamePattern>`
+  * Input: `directoryPath` (string), `fileNamePattern` (string), `recursive` (boolean)
+  * Output:
+    ** Please list files in this directory: `<directoryPath>`
+    ** Please list files in this directory: `<directoryPath>`, with file name pattern: `<fileNamePattern>`
+    ** Please list files in this directory: `<directoryPath>`, with file name pattern: `<fileNamePattern>`, recursively
 
 == Usage with MCP Client
 

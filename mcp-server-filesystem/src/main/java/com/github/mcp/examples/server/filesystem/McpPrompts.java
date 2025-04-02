@@ -3,6 +3,7 @@ package com.github.mcp.examples.server.filesystem;
 import io.modelcontextprotocol.server.McpServerFeatures;
 import io.modelcontextprotocol.server.McpSyncServer;
 import io.modelcontextprotocol.spec.McpSchema;
+import io.modelcontextprotocol.util.Utils;
 
 import java.util.List;
 import java.util.Map;
@@ -17,11 +18,16 @@ public final class McpPrompts {
     /**
      * Create a new prompt to the MCP server that to assist to read file.
      * <p>
-     * Arguments:
+     * Prompt Arguments:
+     * <p>
      * filepath (string): The path to the file to read.
      * <p>
-     * Returns:
-     * result (string): The prompt message like "What is the content of this file: /path/to/file.txt"
+     * Prompt Messages:
+     * <p>
+     * result (string): The prompt message like
+     * <ul>
+     *     <li>What is the content of this file: /path/to/file.txt</li>
+     * </ul>
      *
      * @return A specification for the MCP prompt.
      */
@@ -30,7 +36,7 @@ public final class McpPrompts {
             .PromptArgument("filepath", "The path to the file to read", true);
 
         McpSchema.Prompt prompt = new McpSchema
-            .Prompt("read_file", "Read complete contents of a file.", List.of(filepath));
+            .Prompt("read_file", "Read complete file contents with UTF-8 encoding.", List.of(filepath));
 
         return new McpServerFeatures.SyncPromptSpecification(
             prompt,
@@ -46,7 +52,24 @@ public final class McpPrompts {
     }
 
     /**
-     * Create a new prompt to the MCP server that to assist to list files of a directory non-recursively.
+     * Create a new prompt to the MCP server that to assist to list files of a directory.
+     * <p>
+     * Prompt Arguments:
+     * <p>
+     * directoryPath (string): The path to the directory to read.
+     * <p>
+     * fileNamePattern (string): Regular expression to filter files.
+     * <p>
+     * recursive (boolean): Whether to list files recursively.
+     * <p>
+     * Prompt Messages:
+     * <p>
+     * result (string): The prompt message like
+     * <ul>
+     *     <li>Please list files in this directory: /path/to</li>
+     *     <li>Please list files in this directory: /path/to, with file name pattern: \.txt</li>
+     *     <li>Please list files in this directory: /path/to, recursively, with file name pattern: \.txt</li>
+     * </ul>
      *
      * @return A specification for the MCP prompt.
      */
@@ -55,25 +78,31 @@ public final class McpPrompts {
             .PromptArgument("directoryPath", "The path to the directory to read", true);
         McpSchema.PromptArgument fileNamePattern = new McpSchema
             .PromptArgument("fileNamePattern", "Regular expression to filter files", false);
+        McpSchema.PromptArgument recursive = new McpSchema
+            .PromptArgument("recursive", "Whether to list files recursively", false);
 
-        List<McpSchema.PromptArgument> args = List.of(directoryPath, fileNamePattern);
-        McpSchema.Prompt prompt = new McpSchema.Prompt(
-            "list_files",
-            "List directory files non-recursively with name-based filtering.",
-            args
-        );
+        List<McpSchema.PromptArgument> args = List.of(directoryPath, fileNamePattern, recursive);
+        McpSchema.Prompt prompt = new McpSchema
+            .Prompt("list_files", "List directory files with name-based filtering.", args);
 
         return new McpServerFeatures.SyncPromptSpecification(
             prompt,
             (exchange, request) -> {
                 Map<String, Object> arguments = request.arguments();
-                McpSchema.TextContent content = new McpSchema.TextContent(
-                    String.format(
-                        "What is the list of files in this directory (non-recursive): %s, with file name pattern: %s",
-                        arguments.get("directoryPath"),
-                        arguments.get("fileNamePattern")
-                    )
-                );
+
+                StringBuilder promptMessage = new StringBuilder("Please list files in this directory: ");
+                promptMessage.append(arguments.get("directoryPath"));
+
+                if (Boolean.TRUE.equals(arguments.get("recursive"))) {
+                    promptMessage.append(", recursively");
+                }
+
+                final String pattern = arguments.getOrDefault("fileNamePattern", "").toString();
+                if (Utils.hasText(pattern)) {
+                    promptMessage.append(", with file name pattern: ").append(pattern);
+                }
+
+                McpSchema.TextContent content = new McpSchema.TextContent(promptMessage.toString());
                 McpSchema.PromptMessage message = new McpSchema.PromptMessage(McpSchema.Role.USER, content);
                 return new McpSchema.GetPromptResult(prompt.description(), List.of(message));
             }
