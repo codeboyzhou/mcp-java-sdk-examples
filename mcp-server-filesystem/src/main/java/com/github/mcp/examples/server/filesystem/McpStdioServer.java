@@ -1,5 +1,6 @@
 package com.github.mcp.examples.server.filesystem;
 
+import io.modelcontextprotocol.server.McpServer;
 import io.modelcontextprotocol.server.McpSyncServer;
 import io.modelcontextprotocol.server.transport.StdioServerTransportProvider;
 import io.modelcontextprotocol.spec.McpSchema;
@@ -9,7 +10,7 @@ import io.modelcontextprotocol.spec.McpSchema;
  *
  * @author codeboyzhou
  */
-public class McpServer {
+public class McpStdioServer {
     /**
      * The name of the MCP server.
      */
@@ -18,7 +19,7 @@ public class McpServer {
     /**
      * The version of the MCP server.
      */
-    private static final String SERVER_VERSION = "0.1.0";
+    private static final String SERVER_VERSION = "0.8.1";
 
     /**
      * The MCP sync server instance.
@@ -26,16 +27,16 @@ public class McpServer {
     private McpSyncServer server;
 
     /**
-     * Initializes the MCP server on STDIO.
+     * Initialize the STDIO MCP server.
      */
     private void initialize() {
         McpSchema.ServerCapabilities serverCapabilities = McpSchema.ServerCapabilities.builder()
             .tools(true)
             .prompts(true)
-            .resources(false, true)
+            .resources(true, true)
             .build();
 
-        server = io.modelcontextprotocol.server.McpServer.sync(new StdioServerTransportProvider())
+        server = McpServer.sync(new StdioServerTransportProvider())
             .serverInfo(SERVER_NAME, SERVER_VERSION)
             .capabilities(serverCapabilities)
             .build();
@@ -45,16 +46,16 @@ public class McpServer {
     }
 
     /**
-     * Main entry point for the MCP server on STDIO.
+     * Main entry point for the STDIO MCP server.
      */
     public static void main(String[] args) {
         // Initialize MCP server
-        McpServer mcpServer = new McpServer();
-        mcpServer.initialize();
+        McpStdioServer mcpStdioServer = new McpStdioServer();
+        mcpStdioServer.initialize();
         // Add resources, prompts and tools to the MCP server
-        McpResources.addAllTo(mcpServer.server);
-        McpPrompts.addAllTo(mcpServer.server);
-        McpTools.addAllTo(mcpServer.server);
+        McpResources.addAllTo(mcpStdioServer.server);
+        McpPrompts.addAllTo(mcpStdioServer.server);
+        McpTools.addAllTo(mcpStdioServer.server);
     }
 
 }
