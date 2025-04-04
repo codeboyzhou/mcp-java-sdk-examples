@@ -43,6 +43,11 @@ public class McpSseServer {
     private static final String MSG_ENDPOINT = "/mcp/message";
 
     /**
+     * The MCP SSE endpoint.
+     */
+    private static final String SSE_ENDPOINT = "/mcp/sse";
+
+    /**
      * The MCP sync server instance.
      */
     private McpSyncServer server;
@@ -57,7 +62,9 @@ public class McpSseServer {
             .resources(true, true)
             .build();
 
-        HttpServletSseServerTransportProvider transport = new HttpServletSseServerTransportProvider(JSON, MSG_ENDPOINT);
+        HttpServletSseServerTransportProvider transport = new HttpServletSseServerTransportProvider(
+            JSON, MSG_ENDPOINT, SSE_ENDPOINT
+        );
         server = McpServer.sync(transport)
             .serverInfo(SERVER_NAME, SERVER_VERSION)
             .capabilities(serverCapabilities)
@@ -72,6 +79,9 @@ public class McpSseServer {
         startHttpServer(transport);
     }
 
+    /**
+     * Start the HTTP server with Jetty.
+     */
     private void startHttpServer(HttpServletSseServerTransportProvider transport) {
         ServletContextHandler servletContextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
         servletContextHandler.setContextPath("/");
