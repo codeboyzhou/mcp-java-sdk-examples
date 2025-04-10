@@ -84,8 +84,10 @@ public final class McpTools {
     public static McpServerFeatures.SyncToolSpecification listFiles() throws IOException {
         // Step 1: Load the JSON schema for the tool input arguments.
         final String schema = FileOperationHelper.readResourceAsString("schema/list-files-tool-input-json-schema.json");
+
         // Step 2: Create a tool with name, description, and JSON schema.
         McpSchema.Tool tool = new McpSchema.Tool("list_files", "List files of a directory.", schema);
+
         // Step 3: Create a tool specification with the tool and the call function.
         return new McpServerFeatures.SyncToolSpecification(tool, (exchange, arguments) -> {
             // Step 4: List files and return the result.
