@@ -33,8 +33,10 @@ public final class McpTools {
     public static McpServerFeatures.SyncToolSpecification readFile() throws IOException {
         // Step 1: Load the JSON schema for the tool input arguments.
         final String schema = FileOperationHelper.readResourceAsString("schema/read-file-tool-input-json-schema.json");
+
         // Step 2: Create a tool with name, description, and JSON schema.
         McpSchema.Tool tool = new McpSchema.Tool("read_file", "Read complete contents of a file.", schema);
+
         // Step 3: Create a tool specification with the tool and the call function.
         return new McpServerFeatures.SyncToolSpecification(tool, (exchange, arguments) -> {
             // Step 4: Read the file and return the result.

@@ -26,8 +26,10 @@ public final class McpResources {
             "file://system", "filesystem", "File system operations interface", "text/plain",
             new McpSchema.Annotations(List.of(McpSchema.Role.ASSISTANT, McpSchema.Role.USER), 1.0)
         );
-        // Step 2: Create a handler that returns the contents of the resource.
+
+        // Step 2: Create a resource specification with the resource and a read handler.
         return new McpServerFeatures.SyncResourceSpecification(resource, (exchange, request) -> {
+            // Step 3: Return the contents of the resource.
             McpSchema.ResourceContents contents = new McpSchema.TextResourceContents(
                 resource.uri(), resource.mimeType(), "No specific resource contents, just use the tools."
             );
