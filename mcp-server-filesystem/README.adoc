@@ -20,31 +20,16 @@ Java server implementing Model Context Protocol (MCP) for filesystem operations.
 - *read_file*
   * Read complete file contents with UTF-8 encoding.
   * Input:
-    ** `path` (string): The path to the file to read.
+    ** `path` (string): The filepath to read, required.
   * Output: Complete file contents with UTF-8 encoding.
 
 - *list_files*
-  * List files of a directory with name-based filtering and recursion option.
+  * List files of a directory.
   * Input:
-    ** `directoryPath` (string): The path to the directory to read.
-    ** `fileNamePattern` (string): Regular expression to filter files, if it's empty, all files will be listed. Default is empty.
-    ** `recursive` (boolean): Whether to list files recursively. Default is `false`.
-  * Output: A list of file names (paths if 'recursive' is `true`), or empty string if no files are found.
-
-=== Prompts
-
-- *read_file*
-  * For `read_file` tool
-  * Input: `filepath` (string)
-  * Output: What is the content of this file: `<filepath>`.
-
-- *list_files*
-  * For `list_files` tool
-  * Input: `directoryPath` (string), `fileNamePattern` (string), `recursive` (boolean)
-  * Output:
-    ** Please list files in this directory: `<directoryPath>`.
-    ** Please list files in this directory: `<directoryPath>`, with file name pattern: `<fileNamePattern>`.
-    ** Please list files in this directory: `<directoryPath>`, with file name pattern: `<fileNamePattern>`, recursively.
+    ** `path` (string): The directory path to read, required.
+    ** `pattern` (string): Regular expression to filter files, optional, default is empty, means no filter.
+    ** `recursive` (boolean): Whether to list files recursively, optional, default is `false`.
+  * Output: A list of file names (paths if 'recursive' is `true`), or empty string if no files found.
 
 == Usage with MCP Client
 
