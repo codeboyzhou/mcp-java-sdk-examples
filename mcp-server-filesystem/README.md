@@ -15,6 +15,22 @@ Java server implementing Model Context Protocol (MCP) for filesystem operations.
 
 - `file://system`: File system operations interface.
 
+### Prompts
+
+- **read_file**
+  - Read complete file contents with UTF-8 encoding.
+  - Input:
+    * `path` (string): The filepath to read, required.
+  - Output: "What is the complete contents of the file: /path/to/file.txt"
+
+- **list_files**
+  - List files of a directory.
+  - Input:
+    * `path` (string): The directory path to read, required.
+    * `pattern` (string): Regular expression to filter files, optional, default is empty, means no filter.
+    * `recursive` (boolean): Whether to list files recursively, optional, default is `false`.
+  - Output: "List files in the directory: /path/to/directory, with file name pattern: *.txt, recursively: true"
+
 ### Tools
 
 - **read_file**
@@ -67,4 +83,24 @@ mvn clean package
     }
   }
 }
+```
+
+## Usage with FastAgent
+
+### Build
+
+```bash
+mvn clean package
+```
+
+### Configuration
+
+Rename `fastagent-config.yaml.example` to `fastagent-config.yaml` and configure the default LLM you want to use.
+
+Rename `fastagent-secrets.yaml.example` to `fastagent-secrets.yaml` and configure your LLM API key.
+
+```bash
+pip install uv
+uv pip install fast-agent-mcp
+uv run ./agent/agent.py
 ```
