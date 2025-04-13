@@ -8,3 +8,8 @@
 # Maven build files
 target/
 dependency-reduced-pom.xml
+
+# FastAgent files
+fastagent.secrets.yaml
+fastagent.config.yaml
+fastagent.jsonl
