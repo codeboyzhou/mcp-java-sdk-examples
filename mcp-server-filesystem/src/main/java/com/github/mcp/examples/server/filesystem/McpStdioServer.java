@@ -52,8 +52,9 @@ public class McpStdioServer {
         // Initialize MCP server
         McpStdioServer mcpStdioServer = new McpStdioServer();
         mcpStdioServer.initialize();
-        // Add resources and tools to the MCP server
+        // Add resources, prompts, and tools to the MCP server
         McpResources.addAllTo(mcpStdioServer.server);
+        McpPrompts.addAllTo(mcpStdioServer.server);
         McpTools.addAllTo(mcpStdioServer.server);
     }
 

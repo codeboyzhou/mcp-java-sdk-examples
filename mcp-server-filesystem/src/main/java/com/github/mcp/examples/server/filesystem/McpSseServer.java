@@ -70,8 +70,9 @@ public class McpSseServer {
             .capabilities(serverCapabilities)
             .build();
 
-        // Add resources and tools to the MCP server
+        // Add resources, prompts, and tools to the MCP server
         McpResources.addAllTo(server);
+        McpPrompts.addAllTo(server);
         McpTools.addAllTo(server);
 
         // Start the HTTP server
