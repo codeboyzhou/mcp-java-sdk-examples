@@ -30,7 +30,7 @@ public class McpSseServer {
     /**
      * The version of the MCP server.
      */
-    private static final String SERVER_VERSION = "0.8.1";
+    private static final String SERVER_VERSION = "0.1.0";
 
     /**
      * The JSON object mapper.
