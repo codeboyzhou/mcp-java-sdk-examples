@@ -23,21 +23,7 @@ public class McpPrompts {
      * sql (string): The SQL query to optimize, required.
      * ------------------------------------------------------
      * Prompt Return:
-     * """
-     * There is an SQL statement along with its EXPLAIN plan and table schemas.                                                                                                                                                                │
-     * Please analyze the query performance and provide optimization recommendations.                                                                                                                                                          │
-     * │
-     * The SQL statement is: SELECT * FROM `test`                                                                                                                                                                                  │
-     * │
-     * The table schema for `test` is: CREATE TABLE `test` (
-     * // Omit details here
-     * ) ENGINE=InnoDB AUTO_INCREMENT=12345 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci                                                                                                                                                 │
-     * │
-     * The EXPLAIN plan for the SQL statement is:                                                                                                                                                                                              │
-     * id = 1 | select_type = SIMPLE | table = payment | partitions = null | type = ALL | possible_keys = null | key = null | key_len = null | ref = null | rows = 16500 | filtered = 100.0 | Extra = null |                                   │
-     * |
-     * Please provide optimization recommendations for the SQL statement.
-     * """
+     * Please see the README.md of this project for more details.
      *
      * @return {@link McpServerFeatures.SyncPromptSpecification}
      */
