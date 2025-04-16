@@ -1,5 +1,6 @@
 package com.github.mcp.examples.server.chat2mysql;
 
+import com.github.mcp.examples.server.chat2mysql.enums.PromptMessageEnding;
 import com.github.mcp.examples.server.chat2mysql.util.SqlHelper;
 import io.modelcontextprotocol.server.McpServerFeatures;
 import io.modelcontextprotocol.server.McpSyncServer;
@@ -56,6 +57,7 @@ public class McpPrompts {
 
             promptTemplate.append("The EXPLAIN plan for the SQL statement is: ").append(SqlHelper.explainSql(sqlStr));
             promptTemplate.append("\n\nPlease provide optimization recommendations for the SQL statement.");
+            promptTemplate.append("\n\n").append(PromptMessageEnding.ofCurrentUserLanguage());
 
             McpSchema.TextContent content = new McpSchema.TextContent(promptTemplate.toString());
             McpSchema.PromptMessage message = new McpSchema.PromptMessage(McpSchema.Role.USER, content);
