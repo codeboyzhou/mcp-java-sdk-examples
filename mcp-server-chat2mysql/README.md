@@ -26,6 +26,8 @@ Java server implementing Model Context Protocol (MCP) for chat2mysql operations.
   The EXPLAIN plan for the SQL statement is: < actual EXPLAIN plan of the query >
 
   Please provide optimization recommendations for the SQL statement.
+
+  Please answer in English (Note: This ending sentence depends on what language your OS is currently using)
   ```
 
 ## Usage with MCP Client
