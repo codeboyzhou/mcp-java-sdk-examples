@@ -10,8 +10,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>mcp-server-chat2mysql</module>
-        <module>mcp-server-filesystem</module>
+        <module>mcp-server-chat2mysql-native</module>
+        <module>mcp-server-filesystem-native</module>
     </modules>
 
     <properties>
