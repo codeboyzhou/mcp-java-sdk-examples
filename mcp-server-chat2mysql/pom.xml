@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.github.codeboyzhou</groupId>
+        <artifactId>mcp-java-sdk-examples</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>mcp-server-chat2mysql</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>commons</module>
+        <module>declarative-sdk-example</module>
+        <module>native-sdk-example</module>
+    </modules>
+
+    <properties>
+        <java.version>17</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!--==================== maven plugin versions ====================-->
+        <maven-shade-plugin.version>3.6.0</maven-shade-plugin.version>
+        <!--==================== dependency versions ====================-->
+        <mysql-connector-j.version>9.2.0</mysql-connector-j.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.github.codeboyzhou</groupId>
+                <artifactId>commons</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>${mysql-connector-j.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>

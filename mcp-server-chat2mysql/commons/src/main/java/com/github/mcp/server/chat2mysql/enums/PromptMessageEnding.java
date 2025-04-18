@@ -1,4 +1,4 @@
-package com.github.mcp.examples.server.chat2mysql.enums;
+package com.github.mcp.server.chat2mysql.enums;
 
 public enum PromptMessageEnding {
 

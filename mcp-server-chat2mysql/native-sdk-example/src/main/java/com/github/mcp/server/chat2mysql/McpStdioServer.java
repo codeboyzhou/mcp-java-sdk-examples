@@ -1,9 +1,12 @@
-package com.github.mcp.examples.server.chat2mysql;
+package com.github.mcp.server.chat2mysql;
 
 import io.modelcontextprotocol.server.McpServer;
 import io.modelcontextprotocol.server.McpSyncServer;
 import io.modelcontextprotocol.server.transport.StdioServerTransportProvider;
 import io.modelcontextprotocol.spec.McpSchema;
+
+import static com.github.mcp.server.chat2mysql.util.ServerInfo.SERVER_NAME;
+import static com.github.mcp.server.chat2mysql.util.ServerInfo.SERVER_VERSION;
 
 /**
  * Java server implementing Model Context Protocol (MCP) for chat2mysql.
@@ -11,15 +14,6 @@ import io.modelcontextprotocol.spec.McpSchema;
  * @author codeboyzhou
  */
 public class McpStdioServer {
-    /**
-     * The name of the MCP server.
-     */
-    private static final String SERVER_NAME = "mcp-server-chat2mysql";
-
-    /**
-     * The version of the MCP server.
-     */
-    private static final String SERVER_VERSION = "0.1.0";
 
     /**
      * The MCP sync server instance.

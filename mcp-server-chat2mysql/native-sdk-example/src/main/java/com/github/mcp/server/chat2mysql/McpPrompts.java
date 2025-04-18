@@ -1,7 +1,7 @@
-package com.github.mcp.examples.server.chat2mysql;
+package com.github.mcp.server.chat2mysql;
 
-import com.github.mcp.examples.server.chat2mysql.enums.PromptMessageEnding;
-import com.github.mcp.examples.server.chat2mysql.util.SqlHelper;
+import com.github.mcp.server.chat2mysql.enums.PromptMessageEnding;
+import com.github.mcp.server.chat2mysql.util.SqlHelper;
 import io.modelcontextprotocol.server.McpServerFeatures;
 import io.modelcontextprotocol.server.McpSyncServer;
 import io.modelcontextprotocol.spec.McpSchema;

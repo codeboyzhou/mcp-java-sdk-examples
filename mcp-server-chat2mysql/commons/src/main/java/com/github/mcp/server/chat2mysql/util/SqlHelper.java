@@ -1,4 +1,4 @@
-package com.github.mcp.examples.server.chat2mysql.util;
+package com.github.mcp.server.chat2mysql.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
