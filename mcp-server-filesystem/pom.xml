@@ -10,13 +10,13 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>mcp-server-chat2mysql</artifactId>
+    <artifactId>mcp-server-filesystem</artifactId>
     <packaging>pom</packaging>
 
     <modules>
-        <module>chat2mysql-commons</module>
-        <module>chat2mysql-declarative-sdk-example</module>
-        <module>chat2mysql-native-sdk-example</module>
+        <module>filesystem-commons</module>
+        <module>filesystem-declarative-sdk-example</module>
+        <module>filesystem-native-sdk-example</module>
     </modules>
 
     <properties>
@@ -27,30 +27,20 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <!--==================== maven plugin versions ====================-->
         <maven-shade-plugin.version>3.6.0</maven-shade-plugin.version>
-        <!--==================== dependency versions ====================-->
-        <mysql-connector-j.version>9.2.0</mysql-connector-j.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>com.github.codeboyzhou</groupId>
-                <artifactId>chat2mysql-commons</artifactId>
+                <artifactId>filesystem-commons</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
-            <version>${mysql-connector-j.version}</version>
-        </dependency>
-    </dependencies>
-
     <build>
-        <finalName>mcp-server-chat2mysql</finalName>
+        <finalName>mcp-server-filesystem</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -65,7 +55,7 @@
                         <configuration>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.github.mcp.server.chat2mysql.McpStdioServer</mainClass>
+                                    <mainClass>com.github.mcp.examples.server.filesystem.McpStdioServer</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
