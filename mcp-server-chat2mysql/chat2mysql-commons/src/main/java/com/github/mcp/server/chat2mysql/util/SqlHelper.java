@@ -55,7 +55,7 @@ public final class SqlHelper {
             }
         } catch (SQLException e) {
             logger.error("Error connecting to MySQL database with jdbc url {}", JDBC_URL, e);
-            return null;
+            return formatExceptionStackTrace(e);
         }
     }
 
@@ -78,8 +78,17 @@ public final class SqlHelper {
             }
         } catch (SQLException e) {
             logger.error("Error connecting to MySQL database with jdbc url {}", JDBC_URL, e);
-            return null;
+            return formatExceptionStackTrace(e);
         }
+    }
+
+    private static String formatExceptionStackTrace(Throwable throwable) {
+        StackTraceElement[] stackTrace = throwable.getStackTrace();
+        StringBuilder result = new StringBuilder(stackTrace[0] + ": " + throwable.getMessage());
+        for (int i = 1; i < stackTrace.length; i++) {
+            result.append("\n\tat ").append(stackTrace[i]);
+        }
+        return result.toString();
     }
 
 }
