@@ -30,9 +30,12 @@ logger:
   truncate_tools: true
 
 # MCP Servers
+# Note: the path separator might be different on Windows
 mcp:
   servers:
+    chat2mysql:
+      command: "java"
+      args: [ "-jar", "mcp-server-chat2mysql/chat2mysql-native-sdk-example/target/mcp-server-chat2mysql.jar" ]
     filesystem:
       command: "java"
-      # Note: the path separator might be different on Windows
-      args: [ "-jar", "../target/mcp-server-chat2mysql.jar" ]
+      args: [ "-jar", "mcp-server-filesystem/filesystem-native-sdk-example/target/mcp-server-filesystem.jar" ]

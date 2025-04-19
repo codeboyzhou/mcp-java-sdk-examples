@@ -80,5 +80,5 @@ Rename `fastagent-secrets.yaml.example` to `fastagent-secrets.yaml` and configur
 ```bash
 pip install uv
 uv pip install fast-agent-mcp
-uv run ./agent/agent.py
+uv run agent.py
 ```
