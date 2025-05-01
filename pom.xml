@@ -30,7 +30,7 @@
         <dependency>
             <groupId>io.github.codeboyzhou</groupId>
             <artifactId>mcp-declarative-java-sdk</artifactId>
-            <version>0.3.0-SNAPSHOT</version>
+            <version>${mcp-declarative-java-sdk.version}</version>
         </dependency>
     </dependencies>
 
