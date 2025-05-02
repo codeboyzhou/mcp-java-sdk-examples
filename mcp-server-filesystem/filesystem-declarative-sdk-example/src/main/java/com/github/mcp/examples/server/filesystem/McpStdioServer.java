@@ -15,7 +15,7 @@ public class McpStdioServer {
 
     public static void main(String[] args) {
         McpServerInfo serverInfo = McpServerInfo.builder().name(SERVER_NAME).version(SERVER_VERSION).build();
-        McpServers.run(McpSseServer.class, args).startSyncStdioServer(serverInfo);
+        McpServers.run(McpStdioServer.class, args).startSyncStdioServer(serverInfo);
     }
 
 }
