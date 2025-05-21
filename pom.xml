@@ -23,14 +23,14 @@
         <!--==================== maven plugin versions ====================-->
         <sortpom-maven-plugin.version>4.0.0</sortpom-maven-plugin.version>
         <!--==================== dependency versions ======================-->
-        <mcp-declarative-java-sdk.version>0.3.0</mcp-declarative-java-sdk.version>
+        <mcp-declarative-java-sdk.version>0.4.0</mcp-declarative-java-sdk.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>io.github.codeboyzhou</groupId>
             <artifactId>mcp-declarative-java-sdk</artifactId>
-            <version>0.3.0-SNAPSHOT</version>
+            <version>${mcp-declarative-java-sdk.version}</version>
         </dependency>
     </dependencies>
 
