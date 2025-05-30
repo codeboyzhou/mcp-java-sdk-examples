@@ -10,6 +10,7 @@ import static com.github.mcp.server.chat2mysql.util.ServerInfo.SERVER_VERSION;
 
 /**
  * Java server implementing Model Context Protocol (MCP) for chat2mysql.
+ * Use AI agent that supports multi-language to chat with your MySQL database.
  *
  * @author codeboyzhou
  */

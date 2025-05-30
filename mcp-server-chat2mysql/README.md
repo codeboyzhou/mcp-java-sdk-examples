@@ -2,6 +2,8 @@
 
 Java server implementing Model Context Protocol (MCP) for chat2mysql operations.
 
+Use AI agent that supports multi-language to chat with your MySQL database.
+
 ## Features
 
 - Generate SQL optimization tips.

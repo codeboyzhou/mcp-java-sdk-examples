@@ -1,8 +1,7 @@
 package com.github.mcp.server.chat2mysql;
 
 import com.github.codeboyzhou.mcp.declarative.McpServers;
-import com.github.codeboyzhou.mcp.declarative.annotation.McpComponentScan;
-import com.github.codeboyzhou.mcp.declarative.server.McpServerInfo;
+import com.github.codeboyzhou.mcp.declarative.server.McpSseServerInfo;
 import com.github.mcp.server.chat2mysql.util.ServerInfo;
 
 /**
@@ -11,18 +10,17 @@ import com.github.mcp.server.chat2mysql.util.ServerInfo;
  *
  * @author codeboyzhou
  */
-@McpComponentScan(basePackageClass = McpStdioServer.class)
-public class McpStdioServer {
+public class McpSseServer {
 
     /**
      * Main entry point for the HTTP SSE MCP server.
      */
     public static void main(String[] args) {
-        McpServerInfo serverInfo = McpServerInfo.builder()
+        McpSseServerInfo serverInfo = McpSseServerInfo.builder()
             .name(ServerInfo.SERVER_NAME)
             .version(ServerInfo.SERVER_VERSION)
             .build();
-        McpServers.run(McpStdioServer.class, args).startSyncStdioServer(serverInfo);
+        McpServers.run(McpSseServer.class, args).startSyncSseServer(serverInfo);
     }
 
 }
