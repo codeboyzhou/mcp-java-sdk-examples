@@ -1,5 +1,6 @@
 package com.github.mcp.examples.server.filesystem;
 
+import com.github.mcp.examples.server.filesystem.util.ServerInfo;
 import io.modelcontextprotocol.server.McpServer;
 import io.modelcontextprotocol.server.McpSyncServer;
 import io.modelcontextprotocol.server.transport.StdioServerTransportProvider;
@@ -11,16 +12,6 @@ import io.modelcontextprotocol.spec.McpSchema;
  * @author codeboyzhou
  */
 public class McpStdioServer {
-    /**
-     * The name of the MCP server.
-     */
-    private static final String SERVER_NAME = "mcp-server-filesystem";
-
-    /**
-     * The version of the MCP server.
-     */
-    private static final String SERVER_VERSION = "0.1.0";
-
     /**
      * The MCP sync server instance.
      */
@@ -37,12 +28,12 @@ public class McpStdioServer {
             .build();
 
         server = McpServer.sync(new StdioServerTransportProvider())
-            .serverInfo(SERVER_NAME, SERVER_VERSION)
+            .serverInfo(ServerInfo.SERVER_NAME, ServerInfo.SERVER_VERSION)
             .capabilities(serverCapabilities)
             .build();
 
         // We are in STDIO mode, so logging is unavailable and messages are output to STDERR only
-        System.err.println(SERVER_NAME + " " + SERVER_VERSION + " initialized in STDIO mode");
+        System.err.println(ServerInfo.SERVER_NAME + " " + ServerInfo.SERVER_VERSION + " initialized in STDIO mode");
     }
 
     /**

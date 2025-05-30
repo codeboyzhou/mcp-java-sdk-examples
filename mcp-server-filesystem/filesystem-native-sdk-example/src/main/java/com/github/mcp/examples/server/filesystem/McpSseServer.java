@@ -1,6 +1,7 @@
 package com.github.mcp.examples.server.filesystem;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.mcp.examples.server.filesystem.util.ServerInfo;
 import io.modelcontextprotocol.server.McpServer;
 import io.modelcontextprotocol.server.McpSyncServer;
 import io.modelcontextprotocol.server.transport.HttpServletSseServerTransportProvider;
@@ -23,16 +24,6 @@ public class McpSseServer {
     private static final Logger logger = LoggerFactory.getLogger(McpSseServer.class);
 
     /**
-     * The name of the MCP server.
-     */
-    private static final String SERVER_NAME = "mcp-server-filesystem";
-
-    /**
-     * The version of the MCP server.
-     */
-    private static final String SERVER_VERSION = "0.1.0";
-
-    /**
      * The JSON object mapper.
      */
     private static final ObjectMapper JSON = new ObjectMapper();
@@ -45,7 +36,7 @@ public class McpSseServer {
     /**
      * The MCP SSE endpoint.
      */
-    private static final String SSE_ENDPOINT = "/mcp/sse";
+    private static final String SSE_ENDPOINT = "/sse";
 
     /**
      * The MCP sync server instance.
@@ -66,7 +57,7 @@ public class McpSseServer {
             JSON, MSG_ENDPOINT, SSE_ENDPOINT
         );
         server = McpServer.sync(transport)
-            .serverInfo(SERVER_NAME, SERVER_VERSION)
+            .serverInfo(ServerInfo.SERVER_NAME, ServerInfo.SERVER_VERSION)
             .capabilities(serverCapabilities)
             .build();
 
