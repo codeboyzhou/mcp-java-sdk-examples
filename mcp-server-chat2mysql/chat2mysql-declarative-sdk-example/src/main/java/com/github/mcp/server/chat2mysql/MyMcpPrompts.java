@@ -3,9 +3,12 @@ package com.github.mcp.server.chat2mysql;
 import com.github.codeboyzhou.mcp.declarative.annotation.McpPrompt;
 import com.github.codeboyzhou.mcp.declarative.annotation.McpPromptParam;
 import com.github.codeboyzhou.mcp.declarative.annotation.McpPrompts;
-import com.github.mcp.server.chat2mysql.enums.PromptMessageEnding;
+import com.github.mcp.server.chat2mysql.enums.PromptMessageTemplate;
 import com.github.mcp.server.chat2mysql.util.SqlHelper;
 
+import java.text.MessageFormat;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -26,25 +29,15 @@ public class MyMcpPrompts {
     public static String generateSqlOptimizationTips(
         @McpPromptParam(name = "sql", description = "The SQL query to optimize, required.", required = true) String sql
     ) {
-        StringBuilder promptTemplate = new StringBuilder("""
-            There is an SQL statement along with its EXPLAIN plan and table schemas.
-            Please analyze the query performance and provide optimization recommendations.""")
-            .append("\n\n")
-            .append("The SQL statement is: ").append(sql)
-            .append("\n\n");
-
         Set<String> tableNames = SqlHelper.parseTableNames(sql);
+        Map<String, String> tableSchemas = new HashMap<>(tableNames.size());
         for (String tableName : tableNames) {
             final String tableSchema = SqlHelper.showCreateTable(tableName);
-            promptTemplate.append("The table schema for ").append(tableName).append(" is: ").append(tableSchema)
-                .append("\n\n");
+            tableSchemas.put(tableName, tableSchema);
         }
-
-        promptTemplate.append("The EXPLAIN plan for the SQL statement is: ").append(SqlHelper.explainSql(sql));
-        promptTemplate.append("\n\nPlease provide optimization recommendations for the SQL statement.");
-        promptTemplate.append("\n\n").append(PromptMessageEnding.ofCurrentUserLanguage());
-
-        return promptTemplate.toString();
+        final String promptTemplate = PromptMessageTemplate.getBySystemLanguage();
+        final String explain = SqlHelper.explainSql(sql);
+        return MessageFormat.format(promptTemplate, sql, tableSchemas, explain);
     }
 
 }

@@ -1,11 +1,13 @@
 package com.github.mcp.server.chat2mysql;
 
-import com.github.mcp.server.chat2mysql.enums.PromptMessageEnding;
+import com.github.mcp.server.chat2mysql.enums.PromptMessageTemplate;
 import com.github.mcp.server.chat2mysql.util.SqlHelper;
 import io.modelcontextprotocol.server.McpServerFeatures;
 import io.modelcontextprotocol.server.McpSyncServer;
 import io.modelcontextprotocol.spec.McpSchema;
 
+import java.text.MessageFormat;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -41,25 +43,19 @@ public class McpPrompts {
             Map<String, Object> arguments = request.arguments();
             final String sqlStr = arguments.get("sql").toString();
 
-            StringBuilder promptTemplate = new StringBuilder("""
-                There is an SQL statement along with its EXPLAIN plan and table schemas.
-                Please analyze the query performance and provide optimization recommendations.""")
-                .append("\n\n")
-                .append("The SQL statement is: ").append(sqlStr)
-                .append("\n\n");
-
+            // Format the prompt template.
             Set<String> tableNames = SqlHelper.parseTableNames(sqlStr);
+            Map<String, String> tableSchemas = new HashMap<>(tableNames.size());
             for (String tableName : tableNames) {
                 final String tableSchema = SqlHelper.showCreateTable(tableName);
-                promptTemplate.append("The table schema for ").append(tableName).append(" is: ").append(tableSchema)
-                    .append("\n\n");
+                tableSchemas.put(tableName, tableSchema);
             }
+            final String promptTemplate = PromptMessageTemplate.getBySystemLanguage();
+            final String explain = SqlHelper.explainSql(sqlStr);
+            final String formatted = MessageFormat.format(promptTemplate, sqlStr, tableSchemas, explain);
 
-            promptTemplate.append("The EXPLAIN plan for the SQL statement is: ").append(SqlHelper.explainSql(sqlStr));
-            promptTemplate.append("\n\nPlease provide optimization recommendations for the SQL statement.");
-            promptTemplate.append("\n\n").append(PromptMessageEnding.ofCurrentUserLanguage());
-
-            McpSchema.TextContent content = new McpSchema.TextContent(promptTemplate.toString());
+            // Create the prompt message and result.
+            McpSchema.TextContent content = new McpSchema.TextContent(formatted);
             McpSchema.PromptMessage message = new McpSchema.PromptMessage(McpSchema.Role.USER, content);
             return new McpSchema.GetPromptResult(prompt.description(), List.of(message));
         });
