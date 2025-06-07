@@ -13,3 +13,8 @@ dependency-reduced-pom.xml
 fastagent.secrets.yaml
 fastagent.config.yaml
 fastagent.jsonl
+
+# Python build files
+uv.toml
+build/
+*.egg-info/
