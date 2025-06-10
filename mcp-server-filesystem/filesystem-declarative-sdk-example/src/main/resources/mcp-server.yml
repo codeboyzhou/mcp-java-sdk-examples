@@ -1,0 +1,19 @@
+enabled: true
+stdio: false
+name: mcp-server-filesystem
+version: 1.0.0
+type: ASYNC
+request-timeout: 20000
+capabilities:
+  resource: true
+  prompt: true
+  tool: true
+change-notification:
+  resource: true
+  prompt: true
+  tool: true
+sse:
+  message-endpoint: /mcp/message
+  endpoint: /sse
+  base-url: http://localhost:8080
+  port: 8080
