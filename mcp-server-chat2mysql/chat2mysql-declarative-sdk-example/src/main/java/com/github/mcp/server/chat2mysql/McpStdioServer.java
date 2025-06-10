@@ -22,7 +22,7 @@ public class McpStdioServer {
             .name(ServerInfo.SERVER_NAME)
             .version(ServerInfo.SERVER_VERSION)
             .build();
-        McpServers.run(McpStdioServer.class, args).startSyncStdioServer(serverInfo);
+        McpServers.run(McpStdioServer.class, args).startStdioServer(serverInfo);
     }
 
 }
