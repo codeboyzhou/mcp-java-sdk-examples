@@ -450,7 +450,7 @@ wheels = [
 
 [[package]]
 name = "fast-agent-mcp"
-version = "0.2.29"
+version = "0.2.30"
 source = { registry = "https://pypi.tuna.tsinghua.edu.cn/simple" }
 dependencies = [
     { name = "a2a-types" },
@@ -476,9 +476,9 @@ dependencies = [
     { name = "tensorzero" },
     { name = "typer" },
 ]
-sdist = { url = "https://pypi.tuna.tsinghua.edu.cn/packages/e5/40/d15f3404d980974f58442ca1b3ab070811902603597d4aed6857266557bb/fast_agent_mcp-0.2.29.tar.gz", hash = "sha256:7aa5f4f43426ec4903c573964f2fe00fbcdef4756cdf3c51099d650fed9979ca", size = 338180, upload-time = "2025-06-07T10:30:39.082Z" }
+sdist = { url = "https://pypi.tuna.tsinghua.edu.cn/packages/1e/e0/f54c4c5f59b95bc02c475e794faf0179ed834e05516c7a4ba4bf6c7fc2f8/fast_agent_mcp-0.2.30.tar.gz", hash = "sha256:f1f6c7db213d12c79a5a3c0851b23425e98270839431fcdee13381d696468c3e", size = 340710, upload-time = "2025-06-09T06:35:58.244Z" }
 wheels = [
-    { url = "https://pypi.tuna.tsinghua.edu.cn/packages/76/1d/f4ab03c326a08af5015aec423b340a98261c155a436347fd73d83d7526ed/fast_agent_mcp-0.2.29-py3-none-any.whl", hash = "sha256:ee973b1d56f7c437c12f54dc267a774d553096074c216786a5e1706886d30b7b", size = 341474, upload-time = "2025-06-07T10:30:36.967Z" },
+    { url = "https://pypi.tuna.tsinghua.edu.cn/packages/ea/ee/bb772ef8232b45e24a19d508293136dc15117000fdebafd2d19f8b43cfa8/fast_agent_mcp-0.2.30-py3-none-any.whl", hash = "sha256:def25aa9081fc4d2edd4490ab2f49fac62bf7f8b764a3b8938630aac0d5bd9b5", size = 344306, upload-time = "2025-06-09T06:35:56.573Z" },
 ]
 
 [[package]]
@@ -813,7 +813,7 @@ dependencies = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "fast-agent-mcp", specifier = ">=0.2.29" }]
+requires-dist = [{ name = "fast-agent-mcp", specifier = ">=0.2.30" }]
 
 [[package]]
 name = "mdurl"
