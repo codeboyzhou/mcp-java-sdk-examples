@@ -25,9 +25,9 @@ public class MyMcpPrompts {
      * @param sql The SQL query to optimize.
      * @return The prompt message, please see the README.md of this project for more details.
      */
-    @McpPrompt(name = "generate_sql_optimization_tips", description = "Generate SQL optimization tips.")
+    @McpPrompt(name = "generate_sql_optimization_tips", descriptionI18nKey = "generate_sql_optimization_tips_prompt_description")
     public static String generateSqlOptimizationTips(
-        @McpPromptParam(name = "sql", description = "The SQL query to optimize, required.", required = true) String sql
+        @McpPromptParam(name = "sql", descriptionI18nKey = "generate_sql_optimization_tips_prompt_param_sql_description", required = true) String sql
     ) {
         Set<String> tableNames = SqlHelper.parseTableNames(sql);
         Map<String, String> tableSchemas = new HashMap<>(tableNames.size());

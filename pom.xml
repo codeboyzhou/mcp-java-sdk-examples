@@ -23,10 +23,16 @@
         <!--==================== maven plugin versions ====================-->
         <sortpom-maven-plugin.version>4.0.0</sortpom-maven-plugin.version>
         <!--==================== dependency versions ======================-->
-        <mcp-declarative-java-sdk.version>0.4.0</mcp-declarative-java-sdk.version>
+        <logback.version>1.5.18</logback.version>
+        <mcp-declarative-java-sdk.version>0.5.0-SNAPSHOT</mcp-declarative-java-sdk.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
         <dependency>
             <groupId>io.github.codeboyzhou</groupId>
             <artifactId>mcp-declarative-java-sdk</artifactId>

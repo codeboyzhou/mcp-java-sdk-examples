@@ -18,9 +18,9 @@ public class MyMcpPrompts {
      * @param path The filepath to read, required.
      * @return "What is the complete contents of the file: /path/to/test.txt"
      */
-    @McpPrompt(name = "read_file", description = "Read complete contents of a file.")
+    @McpPrompt(name = "read_file", descriptionI18nKey = "read_file_prompt_description")
     public static String readFile(
-        @McpPromptParam(name = "path", description = "The filepath to read, required.", required = true) String path
+        @McpPromptParam(name = "path", descriptionI18nKey = "read_file_prompt_param_path_description", required = true) String path
     ) {
         return String.format("What is the complete contents of the file: %s", path);
     }
@@ -33,11 +33,11 @@ public class MyMcpPrompts {
      * @param recursive Whether to list files recursively, optional.
      * @return "List files in the directory: /path/to/dir, with file name pattern: *.txt, recursively: true"
      */
-    @McpPrompt(name = "list_files", description = "List files of a directory.")
+    @McpPrompt(name = "list_files", descriptionI18nKey = "list_files_prompt_description")
     public static String listFiles(
-        @McpPromptParam(name = "path", description = "The directory path to list files, required.", required = true) String path,
-        @McpPromptParam(name = "pattern", description = "The file name pattern to match, optional.") String pattern,
-        @McpPromptParam(name = "recursive", description = "Whether to list files recursively, optional.") boolean recursive
+        @McpPromptParam(name = "path", descriptionI18nKey = "list_files_prompt_param_path_description", required = true) String path,
+        @McpPromptParam(name = "pattern", descriptionI18nKey = "list_files_prompt_param_pattern_description") String pattern,
+        @McpPromptParam(name = "recursive", descriptionI18nKey = "list_files_prompt_param_recursive_description") boolean recursive
     ) {
         return String.format("List files in the directory: %s, with file name pattern: %s, recursively: %s",
             path, pattern, recursive

@@ -18,7 +18,7 @@ public class MyMcpResources {
      *
      * @return A string that represents the resource.
      */
-    @McpResource(uri = "file://system", name = "filesystem", description = "File system operations interface")
+    @McpResource(uri = "file://system", name = "filesystem", descriptionI18nKey = "filesystem_resource_description")
     public String filesystem() {
         return "No specific resource contents, just use the tools.";
     }

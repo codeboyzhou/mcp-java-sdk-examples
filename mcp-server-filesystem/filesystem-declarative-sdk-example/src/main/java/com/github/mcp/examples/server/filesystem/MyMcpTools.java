@@ -26,9 +26,9 @@ public class MyMcpTools {
      * @return The contents of the file, or an error message if the file cannot be read.
      * @throws IOException If there is an error reading the file.
      */
-    @McpTool(name = "read_file", description = "Read complete contents of a file.")
+    @McpTool(name = "read_file", descriptionI18nKey = "read_file_tool_description")
     public String readFile(
-        @McpToolParam(name = "path", description = "The filepath to read, required.", required = true) String path
+        @McpToolParam(name = "path", descriptionI18nKey = "read_file_tool_param_path_description", required = true) String path
     ) throws IOException {
         Path filepath = Path.of(path);
 
@@ -56,11 +56,11 @@ public class MyMcpTools {
      * @return A list of file names (paths if 'recursive' is {@code true}), or empty string if no files found.
      * @throws IOException If there is an error reading the directory.
      */
-    @McpTool(name = "list_files", description = "List files of a directory.")
+    @McpTool(name = "list_files", descriptionI18nKey = "list_files_tool_description")
     public String listFiles(
-        @McpToolParam(name = "path", description = "The directory path to read, required.", required = true) String path,
-        @McpToolParam(name = "pattern", description = "Regular expression to filter files, optional.") String pattern,
-        @McpToolParam(name = "recursive", description = "Whether to list files recursively, optional.") boolean recursive
+        @McpToolParam(name = "path", descriptionI18nKey = "list_files_tool_param_path_description", required = true) String path,
+        @McpToolParam(name = "pattern", descriptionI18nKey = "list_files_tool_param_pattern_description") String pattern,
+        @McpToolParam(name = "recursive", descriptionI18nKey = "list_files_tool_param_recursive_description") boolean recursive
     ) throws IOException {
         Path dirpath = Path.of(path);
 
