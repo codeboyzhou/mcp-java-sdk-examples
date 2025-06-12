@@ -24,7 +24,7 @@
         <sortpom-maven-plugin.version>4.0.0</sortpom-maven-plugin.version>
         <!--==================== dependency versions ======================-->
         <logback.version>1.5.18</logback.version>
-        <mcp-declarative-java-sdk.version>0.5.0-SNAPSHOT</mcp-declarative-java-sdk.version>
+        <mcp-declarative-java-sdk.version>0.5.0</mcp-declarative-java-sdk.version>
     </properties>
 
     <dependencies>
