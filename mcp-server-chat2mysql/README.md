@@ -65,7 +65,7 @@ mvn clean package
 }
 ```
 
-## Usage with FastAgent
+## Usage with FastAgent (https://github.com/evalstate/fast-agent)
 
 ### Build
 
