@@ -10,7 +10,7 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>chat2mysql-declarative-sdk-example</artifactId>
+    <artifactId>mcp-server-chat2mysql-based-on-community-declarative-sdk</artifactId>
     <packaging>jar</packaging>
 
     <properties>
