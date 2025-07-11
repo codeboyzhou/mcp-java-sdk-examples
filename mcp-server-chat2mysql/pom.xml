@@ -16,7 +16,7 @@
     <modules>
         <module>chat2mysql-commons</module>
         <module>chat2mysql-declarative-sdk-example</module>
-        <module>chat2mysql-native-sdk-example</module>
+        <module>mcp-server-chat2mysql-based-on-official-native-sdk</module>
     </modules>
 
     <properties>
