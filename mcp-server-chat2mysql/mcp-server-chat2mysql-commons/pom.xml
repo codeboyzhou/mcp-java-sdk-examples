@@ -10,7 +10,7 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>chat2mysql-commons</artifactId>
+    <artifactId>mcp-server-chat2mysql-commons</artifactId>
     <packaging>jar</packaging>
 
     <properties>

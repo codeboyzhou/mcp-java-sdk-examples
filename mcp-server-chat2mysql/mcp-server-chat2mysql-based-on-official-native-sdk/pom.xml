@@ -24,7 +24,7 @@
     <dependencies>
         <dependency>
             <groupId>com.github.codeboyzhou</groupId>
-            <artifactId>chat2mysql-commons</artifactId>
+            <artifactId>mcp-server-chat2mysql-commons</artifactId>
         </dependency>
     </dependencies>
 

@@ -14,9 +14,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>chat2mysql-commons</module>
         <module>mcp-server-chat2mysql-based-on-community-declarative-sdk</module>
         <module>mcp-server-chat2mysql-based-on-official-native-sdk</module>
+        <module>mcp-server-chat2mysql-commons</module>
     </modules>
 
     <properties>
@@ -35,7 +35,7 @@
         <dependencies>
             <dependency>
                 <groupId>com.github.codeboyzhou</groupId>
-                <artifactId>chat2mysql-commons</artifactId>
+                <artifactId>mcp-server-chat2mysql-commons</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
