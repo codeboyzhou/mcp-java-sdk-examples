@@ -4,5 +4,5 @@ version = "0.1.0"
 description = "mcp-server-agent"
 requires-python = ">=3.12"
 dependencies = [
-    "fast-agent-mcp>=0.2.40",
+    "fast-agent-mcp>=0.2.41",
 ]

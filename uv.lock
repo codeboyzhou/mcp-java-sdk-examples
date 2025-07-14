@@ -369,7 +369,7 @@ wheels = [
 
 [[package]]
 name = "fast-agent-mcp"
-version = "0.2.40"
+version = "0.2.41"
 source = { registry = "https://pypi.tuna.tsinghua.edu.cn/simple" }
 dependencies = [
     { name = "a2a-sdk" },
@@ -384,10 +384,10 @@ dependencies = [
     { name = "openai" },
     { name = "opentelemetry-distro" },
     { name = "opentelemetry-exporter-otlp-proto-http" },
-    { name = "opentelemetry-instrumentation-anthropic", marker = "python_full_version < '4.0'" },
+    { name = "opentelemetry-instrumentation-anthropic", marker = "python_full_version < '4'" },
     { name = "opentelemetry-instrumentation-google-genai" },
-    { name = "opentelemetry-instrumentation-mcp", marker = "python_full_version < '4.0'" },
-    { name = "opentelemetry-instrumentation-openai", marker = "python_full_version < '4.0'" },
+    { name = "opentelemetry-instrumentation-mcp", marker = "python_full_version < '4'" },
+    { name = "opentelemetry-instrumentation-openai", marker = "python_full_version < '4'" },
     { name = "prompt-toolkit" },
     { name = "pydantic" },
     { name = "pydantic-settings" },
@@ -396,9 +396,9 @@ dependencies = [
     { name = "tensorzero" },
     { name = "typer" },
 ]
-sdist = { url = "https://pypi.tuna.tsinghua.edu.cn/packages/2a/77/ab2e88f23d3ca54dfe2f9457971b8d7a5a4e11ff439514c32f6aeae41ebc/fast_agent_mcp-0.2.40.tar.gz", hash = "sha256:38d509ef8cc253d98ec6e61a58ec4bebb8be513dd057b46fb143d6613ae29f14", size = 951967, upload-time = "2025-07-07T07:26:35.989Z" }
+sdist = { url = "https://pypi.tuna.tsinghua.edu.cn/packages/f2/c6/43d0ca93549d7fae0ac017339918023b0c8f73c7add9ee8493cab053f2ed/fast_agent_mcp-0.2.41.tar.gz", hash = "sha256:a01c0ff69ae2f75d28ffaef0533a36f5c6f7f69123796fe358a1f7bff6e7b406", size = 960911, upload-time = "2025-07-13T19:03:50.948Z" }
 wheels = [
-    { url = "https://pypi.tuna.tsinghua.edu.cn/packages/e7/83/24892bac19253132ff04ad9ea61186d8fe26665eba12e0f4976051c51098/fast_agent_mcp-0.2.40-py3-none-any.whl", hash = "sha256:ce364fdedea209deb22b6d19a6c536fefb10fe7706e27f5c11c8bd9c556f0b14", size = 379761, upload-time = "2025-07-07T07:26:34.39Z" },
+    { url = "https://pypi.tuna.tsinghua.edu.cn/packages/b7/ba/4a4c188ec77dfd74507e7cf633aba7da3e75c4fe0e2f0108931f871725ee/fast_agent_mcp-0.2.41-py3-none-any.whl", hash = "sha256:bdd0dad46e4c12cf272af6d85faf93d43a4711a04bdb8696822026bfc0d56ae3", size = 390271, upload-time = "2025-07-13T19:03:49.115Z" },
 ]
 
 [[package]]
@@ -793,7 +793,7 @@ dependencies = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "fast-agent-mcp", specifier = ">=0.2.40" }]
+requires-dist = [{ name = "fast-agent-mcp", specifier = ">=0.2.41" }]
 
 [[package]]
 name = "mdurl"
