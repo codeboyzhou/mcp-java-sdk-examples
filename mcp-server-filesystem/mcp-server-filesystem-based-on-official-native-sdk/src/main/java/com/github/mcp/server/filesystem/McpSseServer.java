@@ -1,7 +1,7 @@
-package com.github.mcp.examples.server.filesystem;
+package com.github.mcp.server.filesystem;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.mcp.examples.server.filesystem.util.ServerInfo;
+import com.github.mcp.server.filesystem.util.ServerInfo;
 import io.modelcontextprotocol.server.McpServer;
 import io.modelcontextprotocol.server.McpSyncServer;
 import io.modelcontextprotocol.server.transport.HttpServletSseServerTransportProvider;

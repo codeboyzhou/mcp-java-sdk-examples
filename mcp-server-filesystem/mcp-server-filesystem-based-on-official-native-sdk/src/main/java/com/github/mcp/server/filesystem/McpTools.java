@@ -1,7 +1,7 @@
-package com.github.mcp.examples.server.filesystem;
+package com.github.mcp.server.filesystem;
 
-import com.github.mcp.examples.server.filesystem.util.FileAccessHelper;
-import com.github.mcp.examples.server.filesystem.util.FileOperationHelper;
+import com.github.mcp.server.filesystem.util.FileAccessHelper;
+import com.github.mcp.server.filesystem.util.FileOperationHelper;
 import io.modelcontextprotocol.server.McpServerFeatures;
 import io.modelcontextprotocol.server.McpSyncServer;
 import io.modelcontextprotocol.spec.McpSchema;

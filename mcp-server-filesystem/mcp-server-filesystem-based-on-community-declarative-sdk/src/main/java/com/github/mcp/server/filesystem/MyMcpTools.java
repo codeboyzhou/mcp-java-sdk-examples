@@ -1,10 +1,10 @@
-package com.github.mcp.examples.server.filesystem;
+package com.github.mcp.server.filesystem;
 
 import com.github.codeboyzhou.mcp.declarative.annotation.McpTool;
 import com.github.codeboyzhou.mcp.declarative.annotation.McpToolParam;
 import com.github.codeboyzhou.mcp.declarative.annotation.McpTools;
-import com.github.mcp.examples.server.filesystem.util.FileAccessHelper;
-import com.github.mcp.examples.server.filesystem.util.FileOperationHelper;
+import com.github.mcp.server.filesystem.util.FileAccessHelper;
+import com.github.mcp.server.filesystem.util.FileOperationHelper;
 
 import java.io.IOException;
 import java.nio.file.Files;

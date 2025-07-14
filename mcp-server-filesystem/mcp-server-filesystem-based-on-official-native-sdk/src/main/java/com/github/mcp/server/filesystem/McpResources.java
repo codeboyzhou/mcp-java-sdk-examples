@@ -1,4 +1,4 @@
-package com.github.mcp.examples.server.filesystem;
+package com.github.mcp.server.filesystem;
 
 import io.modelcontextprotocol.server.McpServerFeatures;
 import io.modelcontextprotocol.server.McpSyncServer;

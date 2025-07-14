@@ -1,4 +1,4 @@
-package com.github.mcp.examples.server.filesystem;
+package com.github.mcp.server.filesystem;
 
 import com.github.codeboyzhou.mcp.declarative.annotation.McpResource;
 import com.github.codeboyzhou.mcp.declarative.annotation.McpResources;

@@ -1,8 +1,8 @@
-package com.github.mcp.examples.server.filesystem;
+package com.github.mcp.server.filesystem;
 
 import com.github.codeboyzhou.mcp.declarative.McpServers;
 import com.github.codeboyzhou.mcp.declarative.server.McpServerInfo;
-import com.github.mcp.examples.server.filesystem.util.ServerInfo;
+import com.github.mcp.server.filesystem.util.ServerInfo;
 
 /**
  * Java server implementing Model Context Protocol (MCP) for filesystem operations.

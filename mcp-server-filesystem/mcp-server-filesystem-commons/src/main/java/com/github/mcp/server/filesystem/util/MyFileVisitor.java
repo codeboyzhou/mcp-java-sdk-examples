@@ -1,4 +1,4 @@
-package com.github.mcp.examples.server.filesystem.util;
+package com.github.mcp.server.filesystem.util;
 
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
