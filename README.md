@@ -1,8 +1,10 @@
 # MCP Server Examples
 
-Built using pure [MCP Java SDK](https://github.com/modelcontextprotocol/java-sdk) – No Spring Framework Required.
+A collection of MCP examples developed by various SDKs. As of now, the following SDKs are supported.
 
-For another easier way to develop your own MCP server, you can explore this [Annotation-driven MCP Java SDK](https://github.com/codeboyzhou/mcp-declarative-java-sdk).
+- [Spring AI MCP SDK](https://docs.spring.io/spring-ai/reference/api/mcp/mcp-server-boot-starter-docs.html)
+- [Official MCP Java SDK](https://github.com/modelcontextprotocol/java-sdk)
+- [Annotation-driven MCP Java SDK](https://github.com/codeboyzhou/mcp-declarative-java-sdk) (lightweight and easier to use)
 
 ## Requirements
 
