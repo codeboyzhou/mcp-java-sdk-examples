@@ -10,7 +10,7 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>filesystem-declarative-sdk-example</artifactId>
+    <artifactId>mcp-server-filesystem-based-on-community-declarative-sdk</artifactId>
     <packaging>jar</packaging>
 
     <properties>
@@ -24,7 +24,7 @@
     <dependencies>
         <dependency>
             <groupId>com.github.codeboyzhou</groupId>
-            <artifactId>filesystem-commons</artifactId>
+            <artifactId>mcp-server-filesystem-commons</artifactId>
         </dependency>
     </dependencies>
 

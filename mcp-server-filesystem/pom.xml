@@ -14,9 +14,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>filesystem-commons</module>
-        <module>filesystem-declarative-sdk-example</module>
-        <module>filesystem-native-sdk-example</module>
+        <module>mcp-server-filesystem-based-on-community-declarative-sdk</module>
+        <module>mcp-server-filesystem-based-on-official-native-sdk</module>
+        <module>mcp-server-filesystem-commons</module>
     </modules>
 
     <properties>
@@ -33,7 +33,7 @@
         <dependencies>
             <dependency>
                 <groupId>com.github.codeboyzhou</groupId>
-                <artifactId>filesystem-commons</artifactId>
+                <artifactId>mcp-server-filesystem-commons</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
