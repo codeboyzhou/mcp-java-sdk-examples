@@ -27,5 +27,4 @@ If you are looking for servers implemented with Typescript MCP SDK or Python MCP
 
 These servers aim to demonstrate MCP features and the MCP Java SDK.
 
-- [Chat2MySQL](https://github.com/codeboyzhou/mcp-java-sdk-examples/blob/main/mcp-server-chat2mysql/README.md) - Use AI agent that supports multi-language to chat with your MySQL database
 - [Filesystem](https://github.com/codeboyzhou/mcp-java-sdk-examples/blob/main/mcp-server-filesystem/README.md) - Secure file operations with configurable access controls
