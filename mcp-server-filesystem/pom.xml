@@ -14,10 +14,10 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>mcp-server-filesystem-based-on-community-declarative-sdk</module>
-        <module>mcp-server-filesystem-based-on-official-native-sdk</module>
-        <module>mcp-server-filesystem-based-on-spring-ai-framework</module>
         <module>mcp-server-filesystem-commons</module>
+        <module>mcp-server-filesystem-declarative-sdk-implementation</module>
+        <module>mcp-server-filesystem-official-sdk-implementation</module>
+        <module>mcp-server-filesystem-spring-ai-sdk-implementation</module>
     </modules>
 
     <properties>
@@ -26,8 +26,6 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <!--==================== maven plugin versions ====================-->
-        <maven-shade-plugin.version>3.6.0</maven-shade-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -39,9 +37,5 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <build>
-        <finalName>mcp-server-filesystem</finalName>
-    </build>
 
 </project>
