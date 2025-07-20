@@ -2,9 +2,9 @@
 
 A collection of MCP examples developed by various SDKs. As of now, the following SDKs are supported.
 
-- [Spring AI MCP SDK](https://docs.spring.io/spring-ai/reference/api/mcp/mcp-server-boot-starter-docs.html)
+- [Declarative MCP Java SDK](https://github.com/codeboyzhou/mcp-declarative-java-sdk) (lightweight and easier to use)
 - [Official MCP Java SDK](https://github.com/modelcontextprotocol/java-sdk)
-- [Annotation-driven MCP Java SDK](https://github.com/codeboyzhou/mcp-declarative-java-sdk) (lightweight and easier to use)
+- [Spring AI MCP SDK](https://docs.spring.io/spring-ai/reference/api/mcp/mcp-server-boot-starter-docs.html)
 
 ## Requirements
 

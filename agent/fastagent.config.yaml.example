@@ -31,9 +31,6 @@ logger:
 # MCP Servers
 mcp:
   servers:
-    chat2mysql:
-      command: "java"
-      args: [ "-jar", "mcp-server-chat2mysql/chat2mysql-native-sdk-example/target/mcp-server-chat2mysql.jar" ]
     filesystem:
       command: "java"
-      args: [ "-jar", "mcp-server-filesystem/filesystem-native-sdk-example/target/mcp-server-filesystem.jar" ]
+      args: ["-jar", "${your_jar_file_path}"]

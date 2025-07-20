@@ -5,9 +5,8 @@ Java server implementing Model Context Protocol (MCP) for filesystem operations.
 ## Features
 
 - Read file from the local filesystem.
-- List files of a directory from the local filesystem.
-
-**Note**: The server will only allow operations within directories specified via `env`.
+- Delete file to the local filesystem.
+- Find files or directories from the local filesystem.
 
 ## API
 
@@ -17,35 +16,47 @@ Java server implementing Model Context Protocol (MCP) for filesystem operations.
 
 ### Prompts
 
-- **read_file**
-  - Read complete file contents with UTF-8 encoding.
+- **find**
+  - Start from the specified starting path and recursively search for sub-files or sub-directories.
   - Input:
-    * `path` (string): The filepath to read, required.
-  - Output: "What is the complete contents of the file: /path/to/file.txt"
+    * `start` (string): The starting path to search, required.
+    * `name` (string): The name of the target file or directory to search, supports fuzzy matching, required.
+  - Output: Call the MCP tool 'find' to search for files or directories whose name matches: 'test.txt', starting from the specified start path: '/home/user/codeboyzhou'
 
-- **list_files**
-  - List files of a directory.
-  - Input:
-    * `path` (string): The directory path to read, required.
-    * `pattern` (string): Regular expression to filter files, optional, default is empty, means no filter.
-    * `recursive` (boolean): Whether to list files recursively, optional, default is `false`.
-  - Output: "List files in the directory: /path/to/directory, with file name pattern: *.txt, recursively: true"
+- **read**
+    - Read the contents of a file or non-recursively read the sub-files and sub-directories under a directory.
+    - Input:
+        * `path` (string): The path to read, can be a file or directory, required.
+    - Output: Call the MCP tool 'read' to read the file or directory: '/home/user/codeboyzhou'
+
+- **delete**
+    - Delete a file or directory from the filesystem.
+    - Input:
+        * `path` (string): The path to delete, can be a file or directory, required.
+    - Output: Call the MCP tool 'delete' to delete the file or directory: '/home/user/codeboyzhou'
 
 ### Tools
 
-- **read_file**
-  - Read complete file contents with UTF-8 encoding.
-  - Input:
-    * `path` (string): The filepath to read, required.
-  - Output: Complete file contents with UTF-8 encoding.
+- **find**
+    - Start from the specified starting path and recursively search for sub-files or sub-directories.
+    - Input:
+        * `start` (string): The starting path to search, required.
+        * `name` (string): The name of the target file or directory to search, supports fuzzy matching, required.
+    - Output: A list of absolute path strings for all matching entries found during the search.
 
-- **list_files**
-  - List files of a directory.
-  - Input:
-    * `path` (string): The directory path to read, required.
-    * `pattern` (string): Regular expression to filter files, optional, default is empty, means no filter.
-    * `recursive` (boolean): Whether to list files recursively, optional, default is `false`.
-  - Output: A list of file names (paths if 'recursive' is `true`), or empty string if no files found.
+- **read**
+    - Read the contents of a file or non-recursively read the sub-files and sub-directories under a directory.
+    - Input:
+        * `path` (string): The path to read, can be a file or directory, required.
+    - Output: If the path points to a file, it returns a string containing the file's content.
+              If the path points to a directory, it returns a list of strings representing the direct children
+              (immediate subdirectories and files) directly under the specified directory (non-recursive).
+
+- **delete**
+    - Delete a file or directory from the filesystem.
+    - Input:
+        * `path` (string): The path to delete, can be a file or directory, required.
+    - Output: The operation result, for example: `Successfully deleted path: /home/user/codeboyzhou`
 
 ## Usage with MCP Client
 
@@ -53,17 +64,11 @@ You can use any MCP client such as Cursor (IDE) or Cline (VS Code plugin) to int
 
 ### Build
 
-```bash
+```shell
 mvn clean package
 ```
 
 ### Configuration
-
-**Note**: The `env` configuration is optional for access control.
-
-`readable`: Read access control with regular expressions, format example: `["^/var/log/(app|sys)\.log$"]`.
-
-`writable`: Write access control with regular expressions, format example: `["^/var/log/(app|sys)\.log$"]`.
 
 ```json
 {
@@ -72,14 +77,8 @@ mvn clean package
       "command": "java",
       "args": [
         "-jar",
-        "${your_jar_path}/mcp-server-filesystem.jar"
-      ],
-      "env": {
-        "permission": {
-          "readable": [],
-          "writable": []
-        }
-      }
+        "${your_jar_file_path}"
+      ]
     }
   }
 }
@@ -89,18 +88,22 @@ mvn clean package
 
 ### Build
 
-```bash
+```shell
 mvn clean package
 ```
 
 ### Configuration
 
-Rename `fastagent-config.yaml.example` to `fastagent-config.yaml` and configure the default LLM you want to use.
+```shell
+cd agent
+```
+
+Rename `fastagent-config.yaml.example` to `fastagent-config.yaml` and configure the default LLM and MCP server.
 
 Rename `fastagent-secrets.yaml.example` to `fastagent-secrets.yaml` and configure your LLM API key.
 
-```bash
+```shell
 pip install uv
-uv pip install fast-agent-mcp
+uv sync
 uv run agent.py
 ```
