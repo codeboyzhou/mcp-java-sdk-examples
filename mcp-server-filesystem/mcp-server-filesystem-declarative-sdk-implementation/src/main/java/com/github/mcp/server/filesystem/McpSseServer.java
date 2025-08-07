@@ -9,11 +9,8 @@ import com.github.codeboyzhou.mcp.declarative.McpServers;
  */
 public class McpSseServer {
 
-	/**
-	 * Main entry for the HTTP SSE MCP server.
-	 */
-	public static void main(String[] args) {
-		McpServers.run(McpSseServer.class, args).startServer();
-	}
-
+  /** Main entry for the HTTP SSE MCP server. */
+  public static void main(String[] args) {
+    McpServers.run(McpSseServer.class, args).startServer();
+  }
 }

@@ -11,12 +11,10 @@ import com.github.mcp.server.filesystem.common.ServerInfo;
  */
 public class McpStdioServer {
 
-	/**
-	 * Main entry for the STDIO MCP server.
-	 */
-	public static void main(String[] args) {
-		McpServerInfo serverInfo = McpServerInfo.builder().name(ServerInfo.NAME).version(ServerInfo.VERSION).build();
-		McpServers.run(McpStdioServer.class, args).startStdioServer(serverInfo);
-	}
-
+  /** Main entry for the STDIO MCP server. */
+  public static void main(String[] args) {
+    McpServerInfo serverInfo =
+        McpServerInfo.builder().name(ServerInfo.NAME).version(ServerInfo.VERSION).build();
+    McpServers.run(McpStdioServer.class, args).startStdioServer(serverInfo);
+  }
 }

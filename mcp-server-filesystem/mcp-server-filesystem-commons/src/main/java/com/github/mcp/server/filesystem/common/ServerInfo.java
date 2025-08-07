@@ -4,16 +4,15 @@ import java.time.Duration;
 
 public interface ServerInfo {
 
-	String NAME = "mcp-server-filesystem";
+  String NAME = "mcp-server-filesystem";
 
-	String VERSION = "1.0.0";
+  String VERSION = "1.0.0";
 
-	String INSTRUCTIONS = "Filesystem MCP Server";
+  String INSTRUCTIONS = "Filesystem MCP Server";
 
-	Duration REQUEST_TIMEOUT = Duration.ofSeconds(30);
+  Duration REQUEST_TIMEOUT = Duration.ofSeconds(30);
 
-	String MESSAGE_ENDPOINT = "/mcp/message";
+  String MESSAGE_ENDPOINT = "/mcp/message";
 
-	String SSE_ENDPOINT = "/sse";
-
+  String SSE_ENDPOINT = "/sse";
 }
