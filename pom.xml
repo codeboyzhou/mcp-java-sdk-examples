@@ -22,6 +22,7 @@
         <!--==================== maven plugin versions ====================-->
         <maven-shade-plugin.version>3.6.0</maven-shade-plugin.version>
         <sortpom-maven-plugin.version>4.0.0</sortpom-maven-plugin.version>
+        <spotbugs-maven-plugin.version>4.9.3.2</spotbugs-maven-plugin.version>
         <spotless-maven-plugin.version>2.46.1</spotless-maven-plugin.version>
         <spring-boot-maven-plugin.version>3.5.3</spring-boot-maven-plugin.version>
         <!--==================== dependency versions ======================-->
@@ -96,6 +97,19 @@
                         <goals>
                             <goal>sort</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>${spotbugs-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <phase>compile</phase>
                     </execution>
                 </executions>
             </plugin>
