@@ -20,15 +20,14 @@ public final class McpResources {
    */
   public static McpServerFeatures.SyncResourceSpecification filesystem() {
     // Step 1: Create a resource with URI, name, description, and MIME type.
-    McpSchema.Annotations annotations =
-        new McpSchema.Annotations(List.of(McpSchema.Role.ASSISTANT), 1.0);
     McpSchema.Resource resource =
-        new McpSchema.Resource(
-            "file://system",
-            "filesystem",
-            "File system operations interface",
-            "text/plain",
-            annotations);
+        McpSchema.Resource.builder()
+            .uri("file://system")
+            .name("filesystem")
+            .description("File system operations interface")
+            .mimeType("text/plain")
+            .annotations(new McpSchema.Annotations(List.of(McpSchema.Role.ASSISTANT), 1.0))
+            .build();
 
     // Step 2: Create a resource specification with the resource and a read handler.
     return new McpServerFeatures.SyncResourceSpecification(

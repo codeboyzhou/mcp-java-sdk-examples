@@ -34,9 +34,7 @@ public class McpTools {
    *
    * @return A list of absolute path strings for all matching entries found during the search.
    */
-  @Tool(
-      description =
-          "Start from the specified starting path and recursively search for sub-files or sub-directories.")
+  @Tool(description = "Start from the specified path and recursively search subitems.")
   public String find(
       @ToolParam(description = "The starting path to search, required.") String start,
       @ToolParam(
@@ -85,9 +83,7 @@ public class McpTools {
    *     (immediate subdirectories and files) directly under the specified directory
    *     (non-recursive).
    */
-  @Tool(
-      description =
-          "Read the contents of a file or non-recursively read the sub-files and sub-directories under a directory.")
+  @Tool(description = "Read a file or list directory contents non-recursively.")
   public String read(
       @ToolParam(description = "The path to read, can be a file or directory, required.")
           String path) {

@@ -42,9 +42,7 @@ public final class McpPrompts {
     List<McpSchema.PromptArgument> args = List.of(start, name);
     McpSchema.Prompt prompt =
         new McpSchema.Prompt(
-            "find",
-            "Start from the specified starting path and recursively search for sub-files or sub-directories.",
-            args);
+            "find", "Start from the specified path and recursively search subitems.", args);
 
     // Step 3: Create a prompt specification with the prompt and the prompt handler.
     return new McpServerFeatures.SyncPromptSpecification(
@@ -91,9 +89,7 @@ public final class McpPrompts {
     List<McpSchema.PromptArgument> args = List.of(path);
     McpSchema.Prompt prompt =
         new McpSchema.Prompt(
-            "read",
-            "Read the contents of a file or non-recursively read the sub-files and sub-directories under a directory.",
-            args);
+            "read", "Read a file or list directory contents non-recursively.", args);
 
     // Step 3: Create a prompt specification with the prompt and the prompt handler.
     return new McpServerFeatures.SyncPromptSpecification(

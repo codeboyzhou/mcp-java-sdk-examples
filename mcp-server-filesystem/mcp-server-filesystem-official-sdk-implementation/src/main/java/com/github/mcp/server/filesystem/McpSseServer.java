@@ -3,7 +3,6 @@ package com.github.mcp.server.filesystem;
 import static com.github.mcp.server.filesystem.common.ServerInfo.MESSAGE_ENDPOINT;
 import static com.github.mcp.server.filesystem.common.ServerInfo.SSE_ENDPOINT;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.mcp.server.filesystem.common.ServerInfo;
 import io.modelcontextprotocol.server.McpServer;
 import io.modelcontextprotocol.server.McpSyncServer;
@@ -60,8 +59,11 @@ public class McpSseServer {
             .build();
 
     transport =
-        new HttpServletSseServerTransportProvider(
-            new ObjectMapper(), MESSAGE_ENDPOINT, SSE_ENDPOINT);
+        HttpServletSseServerTransportProvider.builder()
+            .sseEndpoint(SSE_ENDPOINT)
+            .messageEndpoint(MESSAGE_ENDPOINT)
+            .build();
+
     server =
         McpServer.sync(transport)
             .serverInfo(ServerInfo.NAME, ServerInfo.VERSION)

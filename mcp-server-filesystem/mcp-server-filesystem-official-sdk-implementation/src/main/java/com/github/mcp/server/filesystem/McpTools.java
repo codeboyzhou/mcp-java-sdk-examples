@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,47 +43,52 @@ public final class McpTools {
 
     // Step 2: Create a tool with name, description, and JSON schema.
     McpSchema.Tool tool =
-        new McpSchema.Tool(
-            "find",
-            "Start from the specified starting path and recursively search for sub-files or sub-directories.",
-            schema);
+        McpSchema.Tool.builder()
+            .name("find")
+            .description("Start from the specified path and recursively search subitems.")
+            .inputSchema(schema)
+            .build();
 
     // Step 3: Create a tool specification with the tool and the call function.
-    return new McpServerFeatures.SyncToolSpecification(
-        tool,
-        (exchange, arguments) -> {
-          // Step 4: List files and return the result.
-          final String start = arguments.getOrDefault("start", StringHelper.EMPTY).toString();
-          final String name = arguments.getOrDefault("name", StringHelper.EMPTY).toString();
-          boolean error = false;
-          String result;
+    return McpServerFeatures.SyncToolSpecification.builder()
+        .tool(tool)
+        .callHandler(
+            (exchange, request) -> {
+              // Step 4: List files and return the result.
+              Map<String, Object> arguments = request.arguments();
+              final String start = arguments.getOrDefault("start", StringHelper.EMPTY).toString();
+              final String name = arguments.getOrDefault("name", StringHelper.EMPTY).toString();
+              boolean error = false;
+              String result;
 
-          if (start.isBlank()) {
-            result = "Please provide a valid start path to find.";
-          } else if (Files.notExists(Path.of(start))) {
-            result = "Start path does not exist: " + start + ", stopped finding.";
-          } else if (name.isBlank()) {
-            result = "Please provide a valid file/directory name to find.";
-          } else {
-            try {
-              List<String> paths = FileHelper.fuzzySearch(start, name);
-              if (paths.isEmpty()) {
-                result = String.format("No file (or directory) found with name '%s'", name);
+              if (start.isBlank()) {
+                result = "Please provide a valid start path to find.";
+              } else if (Files.notExists(Path.of(start))) {
+                result = "Start path does not exist: " + start + ", stopped finding.";
+              } else if (name.isBlank()) {
+                result = "Please provide a valid file/directory name to find.";
               } else {
-                result =
-                    String.format(
-                        "The following are the search results of name '%s': %s", name, paths);
+                try {
+                  List<String> paths = FileHelper.fuzzySearch(start, name);
+                  if (paths.isEmpty()) {
+                    result = String.format("No file (or directory) found with name '%s'", name);
+                  } else {
+                    result =
+                        String.format(
+                            "The following are the search results of name '%s': %s", name, paths);
+                  }
+                } catch (IOException e) {
+                  error = true;
+                  result =
+                      String.format("Error searching file: %s, %s: %s", name, e, e.getMessage());
+                  log.error(result, e);
+                }
               }
-            } catch (IOException e) {
-              error = true;
-              result = String.format("Error searching file: %s, %s: %s", name, e, e.getMessage());
-              log.error(result, e);
-            }
-          }
 
-          McpSchema.Content content = new McpSchema.TextContent(result);
-          return new McpSchema.CallToolResult(List.of(content), error);
-        });
+              McpSchema.Content content = new McpSchema.TextContent(result);
+              return new McpSchema.CallToolResult(List.of(content), error);
+            })
+        .build();
   }
 
   /**
@@ -105,50 +111,56 @@ public final class McpTools {
 
     // Step 2: Create a tool with name, description, and JSON schema.
     McpSchema.Tool tool =
-        new McpSchema.Tool(
-            "read",
-            "Read the contents of a file or non-recursively read the sub-files and sub-directories under a directory.",
-            schema);
+        McpSchema.Tool.builder()
+            .name("read")
+            .description("Read a file or list directory contents non-recursively.")
+            .inputSchema(schema)
+            .build();
 
     // Step 3: Create a tool specification with the tool and the call function.
-    return new McpServerFeatures.SyncToolSpecification(
-        tool,
-        (exchange, arguments) -> {
-          // Step 4: Read the path and return the result.
-          final String path = arguments.getOrDefault("path", StringHelper.EMPTY).toString();
-          boolean error = false;
-          String result;
+    return McpServerFeatures.SyncToolSpecification.builder()
+        .tool(tool)
+        .callHandler(
+            (exchange, request) -> {
+              // Step 4: Read the path and return the result.
+              Map<String, Object> arguments = request.arguments();
+              final String path = arguments.getOrDefault("path", StringHelper.EMPTY).toString();
+              boolean error = false;
+              String result;
 
-          if (path.isBlank()) {
-            result = "Please provide a valid path to read.";
-          } else {
-            Path filepath = Path.of(path);
-            if (Files.notExists(filepath)) {
-              result = "The path does not exist: " + filepath + ", stopped reading.";
-            } else if (Files.isDirectory(filepath)) {
-              try {
-                List<String> paths = FileHelper.listDirectory(path);
-                result = String.format("The directory '%s' contains: %s", path, paths);
-              } catch (IOException e) {
-                error = true;
-                result =
-                    String.format("Error reading directory: %s, %s: %s", path, e, e.getMessage());
-                log.error(result, e);
+              if (path.isBlank()) {
+                result = "Please provide a valid path to read.";
+              } else {
+                Path filepath = Path.of(path);
+                if (Files.notExists(filepath)) {
+                  result = "The path does not exist: " + filepath + ", stopped reading.";
+                } else if (Files.isDirectory(filepath)) {
+                  try {
+                    List<String> paths = FileHelper.listDirectory(path);
+                    result = String.format("The directory '%s' contains: %s", path, paths);
+                  } catch (IOException e) {
+                    error = true;
+                    result =
+                        String.format(
+                            "Error reading directory: %s, %s: %s", path, e, e.getMessage());
+                    log.error(result, e);
+                  }
+                } else {
+                  try {
+                    result = FileHelper.readAsString(filepath);
+                  } catch (IOException e) {
+                    error = true;
+                    result =
+                        String.format("Error reading file: %s, %s: %s", path, e, e.getMessage());
+                    log.error(result, e);
+                  }
+                }
               }
-            } else {
-              try {
-                result = FileHelper.readAsString(filepath);
-              } catch (IOException e) {
-                error = true;
-                result = String.format("Error reading file: %s, %s: %s", path, e, e.getMessage());
-                log.error(result, e);
-              }
-            }
-          }
 
-          McpSchema.Content content = new McpSchema.TextContent(result);
-          return new McpSchema.CallToolResult(List.of(content), error);
-        });
+              McpSchema.Content content = new McpSchema.TextContent(result);
+              return new McpSchema.CallToolResult(List.of(content), error);
+            })
+        .build();
   }
 
   /**
@@ -164,32 +176,40 @@ public final class McpTools {
 
     // Step 2: Create a tool with name, description, and JSON schema.
     McpSchema.Tool tool =
-        new McpSchema.Tool("delete", "Delete a file or directory from the filesystem.", schema);
+        McpSchema.Tool.builder()
+            .name("delete")
+            .description("Delete a file or directory from the filesystem.")
+            .inputSchema(schema)
+            .build();
 
     // Step 3: Create a tool specification with the tool and the call function.
-    return new McpServerFeatures.SyncToolSpecification(
-        tool,
-        (exchange, arguments) -> {
-          // Step 4: Delete the path and return the result.
-          final String path = arguments.getOrDefault("path", StringHelper.EMPTY).toString();
-          boolean error = false;
-          String result;
+    return McpServerFeatures.SyncToolSpecification.builder()
+        .tool(tool)
+        .callHandler(
+            (exchange, request) -> {
+              // Step 4: Delete the path and return the result.
+              Map<String, Object> arguments = request.arguments();
+              final String path = arguments.getOrDefault("path", StringHelper.EMPTY).toString();
+              boolean error = false;
+              String result;
 
-          if (path.isBlank()) {
-            result = "Please provide a valid path to delete.";
-          } else {
-            try {
-              final boolean deleted = Files.deleteIfExists(Path.of(path));
-              result = (deleted ? "Successfully deleted path: " : "Failed to delete path: ") + path;
-            } catch (IOException e) {
-              error = true;
-              result = String.format("Error deleting path: %s, %s: %s", path, e, e.getMessage());
-              log.error(result, e);
-            }
-          }
+              if (path.isBlank()) {
+                result = "Please provide a valid path to delete.";
+              } else {
+                try {
+                  final boolean deleted = Files.deleteIfExists(Path.of(path));
+                  result = (deleted ? "Successfully" : "Failed to") + " deleted path: " + path;
+                } catch (IOException e) {
+                  error = true;
+                  result =
+                      String.format("Error deleting path: %s, %s: %s", path, e, e.getMessage());
+                  log.error(result, e);
+                }
+              }
 
-          McpSchema.Content content = new McpSchema.TextContent(result);
-          return new McpSchema.CallToolResult(List.of(content), error);
-        });
+              McpSchema.Content content = new McpSchema.TextContent(result);
+              return new McpSchema.CallToolResult(List.of(content), error);
+            })
+        .build();
   }
 }
