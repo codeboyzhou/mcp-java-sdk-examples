@@ -18,7 +18,7 @@ public class MyMcpResources {
   @McpResource(
       uri = "file://system",
       name = "filesystem",
-      descriptionI18nKey = "filesystem_resource_description")
+      description = "filesystem_resource_description")
   public String filesystem() {
     return "No real contents, just an example";
   }

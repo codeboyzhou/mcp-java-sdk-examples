@@ -16,7 +16,6 @@ fast = FastAgent("FastAgent for MCP Server Java SDK Examples")
     servers=[
         "mcp_server_filesystem_declarative_sdk_implementation",
         "mcp_server_filesystem_official_sdk_implementation",
-        "mcp_server_filesystem_spring_ai_sdk_implementation",
     ]
 )
 async def main():

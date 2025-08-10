@@ -35,17 +35,14 @@ public class MyMcpTools {
    *
    * @return A list of absolute path strings for all matching entries found during the search.
    */
-  @McpTool(descriptionI18nKey = "description_for_find")
+  @McpTool(description = "description_for_find")
   public String find(
       @McpToolParam(
               name = "start",
-              descriptionI18nKey = "description_for_find_param_start",
+              description = "description_for_find_param_start",
               required = true)
           String start,
-      @McpToolParam(
-              name = "name",
-              descriptionI18nKey = "description_for_find_param_name",
-              required = true)
+      @McpToolParam(name = "name", description = "description_for_find_param_name", required = true)
           String name) {
 
     if (start == null || start.isBlank()) {
@@ -89,12 +86,9 @@ public class MyMcpTools {
    *     (immediate subdirectories and files) directly under the specified directory
    *     (non-recursive).
    */
-  @McpTool(descriptionI18nKey = "description_for_read")
+  @McpTool(description = "description_for_read")
   public String read(
-      @McpToolParam(
-              name = "path",
-              descriptionI18nKey = "description_for_read_param_path",
-              required = true)
+      @McpToolParam(name = "path", description = "description_for_read_param_path", required = true)
           String path) {
 
     if (path == null || path.isBlank()) {
@@ -134,11 +128,11 @@ public class MyMcpTools {
    * @param path The path to delete, can be a file or directory, required.
    * @return A message indicating whether the path was successfully deleted or not.
    */
-  @McpTool(descriptionI18nKey = "description_for_delete")
+  @McpTool(description = "description_for_delete")
   public String delete(
       @McpToolParam(
               name = "path",
-              descriptionI18nKey = "description_for_delete_param_path",
+              description = "description_for_delete_param_path",
               required = true)
           String path) {
 

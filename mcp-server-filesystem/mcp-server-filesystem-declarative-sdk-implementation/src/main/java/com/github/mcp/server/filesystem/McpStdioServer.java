@@ -1,6 +1,8 @@
 package com.github.mcp.server.filesystem;
 
 import com.github.codeboyzhou.mcp.declarative.McpServers;
+import com.github.codeboyzhou.mcp.declarative.annotation.McpI18nEnabled;
+import com.github.codeboyzhou.mcp.declarative.annotation.McpServerApplication;
 import com.github.codeboyzhou.mcp.declarative.server.McpServerInfo;
 import com.github.mcp.server.filesystem.common.ServerInfo;
 
@@ -9,6 +11,8 @@ import com.github.mcp.server.filesystem.common.ServerInfo;
  *
  * @author codeboyzhou
  */
+@McpI18nEnabled
+@McpServerApplication
 public class McpStdioServer {
 
   /** Main entry for the STDIO MCP server. */

@@ -28,16 +28,16 @@ public class MyMcpPrompts {
    * @return The prompt message
    * @see MyMcpTools#find(String, String)
    */
-  @McpPrompt(descriptionI18nKey = "description_for_find")
+  @McpPrompt(description = "description_for_find")
   public static String find(
       @McpPromptParam(
               name = "start",
-              descriptionI18nKey = "description_for_find_param_start",
+              description = "description_for_find_param_start",
               required = true)
           String start,
       @McpPromptParam(
               name = "name",
-              descriptionI18nKey = "description_for_find_param_name",
+              description = "description_for_find_param_name",
               required = true)
           String name) {
 
@@ -61,11 +61,11 @@ public class MyMcpPrompts {
    * @return The prompt message
    * @see MyMcpTools#read(String)
    */
-  @McpPrompt(descriptionI18nKey = "description_for_read")
+  @McpPrompt(description = "description_for_read")
   public static String read(
       @McpPromptParam(
               name = "path",
-              descriptionI18nKey = "description_for_read_param_path",
+              description = "description_for_read_param_path",
               required = true)
           String path) {
 
@@ -82,11 +82,11 @@ public class MyMcpPrompts {
    * @return The prompt message
    * @see MyMcpTools#delete(String)
    */
-  @McpPrompt(descriptionI18nKey = "description_for_delete")
+  @McpPrompt(description = "description_for_delete")
   public static String delete(
       @McpPromptParam(
               name = "path",
-              descriptionI18nKey = "description_for_delete_param_path",
+              description = "description_for_delete_param_path",
               required = true)
           String path) {
 
