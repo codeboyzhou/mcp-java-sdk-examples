@@ -1,4 +1,4 @@
-package com.github.mcp.server.filesystem;
+package com.github.mcp.server.filesystem.spring;
 
 import java.util.List;
 import org.springframework.ai.support.ToolCallbacks;
@@ -22,7 +22,7 @@ public class McpStdioServer {
   }
 
   @Bean
-  public List<ToolCallback> toolCallbacks(McpTools mcpTools) {
-    return List.of(ToolCallbacks.from(mcpTools));
+  public List<ToolCallback> toolCallbacks(Tools tools) {
+    return List.of(ToolCallbacks.from(tools));
   }
 }

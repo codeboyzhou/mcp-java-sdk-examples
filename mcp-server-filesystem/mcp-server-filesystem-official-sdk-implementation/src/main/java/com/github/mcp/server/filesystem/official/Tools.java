@@ -1,6 +1,6 @@
-package com.github.mcp.server.filesystem;
+package com.github.mcp.server.filesystem.official;
 
-import com.github.codeboyzhou.mcp.declarative.util.StringHelper;
+import com.github.codeboyzhou.mcp.declarative.util.Strings;
 import com.github.mcp.server.filesystem.common.FileHelper;
 import io.modelcontextprotocol.server.McpServerFeatures;
 import io.modelcontextprotocol.spec.McpSchema;
@@ -20,11 +20,11 @@ import org.slf4j.LoggerFactory;
  * parameter formats, and invocation conditions during reasoning processes.
  *
  * @author codeboyzhou
- * @see McpPrompts
+ * @see Prompts
  */
-public final class McpTools {
+public final class Tools {
 
-  private static final Logger log = LoggerFactory.getLogger(McpTools.class);
+  private static final Logger log = LoggerFactory.getLogger(Tools.class);
 
   /**
    * Create an MCP tool to search for files or directories within the filesystem starting from the
@@ -56,8 +56,8 @@ public final class McpTools {
             (exchange, request) -> {
               // Step 4: List files and return the result.
               Map<String, Object> arguments = request.arguments();
-              final String start = arguments.getOrDefault("start", StringHelper.EMPTY).toString();
-              final String name = arguments.getOrDefault("name", StringHelper.EMPTY).toString();
+              final String start = arguments.getOrDefault("start", Strings.EMPTY).toString();
+              final String name = arguments.getOrDefault("name", Strings.EMPTY).toString();
               boolean error = false;
               String result;
 
@@ -124,7 +124,7 @@ public final class McpTools {
             (exchange, request) -> {
               // Step 4: Read the path and return the result.
               Map<String, Object> arguments = request.arguments();
-              final String path = arguments.getOrDefault("path", StringHelper.EMPTY).toString();
+              final String path = arguments.getOrDefault("path", Strings.EMPTY).toString();
               boolean error = false;
               String result;
 
@@ -189,7 +189,7 @@ public final class McpTools {
             (exchange, request) -> {
               // Step 4: Delete the path and return the result.
               Map<String, Object> arguments = request.arguments();
-              final String path = arguments.getOrDefault("path", StringHelper.EMPTY).toString();
+              final String path = arguments.getOrDefault("path", Strings.EMPTY).toString();
               boolean error = false;
               String result;
 

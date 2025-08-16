@@ -1,4 +1,4 @@
-package com.github.mcp.server.filesystem;
+package com.github.mcp.server.filesystem.declarative;
 
 import com.github.codeboyzhou.mcp.declarative.annotation.McpPrompt;
 import com.github.codeboyzhou.mcp.declarative.annotation.McpPromptParam;
@@ -15,10 +15,10 @@ import com.github.codeboyzhou.mcp.declarative.annotation.McpPrompts;
  * basic text generation or simple logical reasoning tasks.
  *
  * @author codeboyzhou
- * @see MyMcpTools
+ * @see Tools
  */
 @McpPrompts
-public class MyMcpPrompts {
+public class Prompts {
 
   /**
    * Create an MCP prompt to correspond with the {@code find} tool.
@@ -26,7 +26,7 @@ public class MyMcpPrompts {
    * @param start The starting path to search, required.
    * @param name The file name to search, fuzzy search supported, required.
    * @return The prompt message
-   * @see MyMcpTools#find(String, String)
+   * @see Tools#find(String, String)
    */
   @McpPrompt(description = "description_for_find")
   public static String find(
@@ -59,7 +59,7 @@ public class MyMcpPrompts {
    *
    * @param path The path to read, can be a file or directory, required.
    * @return The prompt message
-   * @see MyMcpTools#read(String)
+   * @see Tools#read(String)
    */
   @McpPrompt(description = "description_for_read")
   public static String read(
@@ -80,7 +80,7 @@ public class MyMcpPrompts {
    *
    * @param path The path to delete, can be a file or directory, required.
    * @return The prompt message
-   * @see MyMcpTools#delete(String)
+   * @see Tools#delete(String)
    */
   @McpPrompt(description = "description_for_delete")
   public static String delete(

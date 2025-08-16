@@ -28,7 +28,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot-maven-plugin.version}</version>
                 <configuration>
-                    <mainClass>com.github.mcp.server.filesystem.McpStdioServer</mainClass>
+                    <mainClass>com.github.mcp.server.filesystem.spring.McpStdioServer</mainClass>
                     <executable>true</executable>
                     <layout>JAR</layout>
                 </configuration>

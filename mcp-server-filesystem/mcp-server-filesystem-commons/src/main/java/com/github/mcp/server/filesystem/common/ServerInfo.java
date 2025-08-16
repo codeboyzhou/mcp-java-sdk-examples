@@ -14,5 +14,7 @@ public interface ServerInfo {
 
   String MESSAGE_ENDPOINT = "/mcp/message";
 
+  String MCP_ENDPOINT = "/mcp";
+
   String SSE_ENDPOINT = "/sse";
 }

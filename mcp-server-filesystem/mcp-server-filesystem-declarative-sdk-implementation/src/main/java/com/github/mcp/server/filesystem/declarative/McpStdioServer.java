@@ -1,4 +1,4 @@
-package com.github.mcp.server.filesystem;
+package com.github.mcp.server.filesystem.declarative;
 
 import com.github.codeboyzhou.mcp.declarative.McpServers;
 import com.github.codeboyzhou.mcp.declarative.annotation.McpI18nEnabled;
@@ -18,7 +18,12 @@ public class McpStdioServer {
   /** Main entry for the STDIO MCP server. */
   public static void main(String[] args) {
     McpServerInfo serverInfo =
-        McpServerInfo.builder().name(ServerInfo.NAME).version(ServerInfo.VERSION).build();
+        McpServerInfo.builder()
+            .name(ServerInfo.NAME)
+            .version(ServerInfo.VERSION)
+            .instructions(ServerInfo.INSTRUCTIONS)
+            .requestTimeout(ServerInfo.REQUEST_TIMEOUT)
+            .build();
     McpServers.run(McpStdioServer.class, args).startStdioServer(serverInfo);
   }
 }

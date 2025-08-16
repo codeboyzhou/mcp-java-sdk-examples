@@ -1,6 +1,6 @@
-package com.github.mcp.server.filesystem;
+package com.github.mcp.server.filesystem.official;
 
-import com.github.codeboyzhou.mcp.declarative.util.StringHelper;
+import com.github.codeboyzhou.mcp.declarative.util.Strings;
 import io.modelcontextprotocol.server.McpServerFeatures;
 import io.modelcontextprotocol.spec.McpSchema;
 import java.util.List;
@@ -17,16 +17,16 @@ import java.util.Map;
  * basic text generation or simple logical reasoning tasks.
  *
  * @author codeboyzhou
- * @see McpTools
+ * @see Tools
  */
-public final class McpPrompts {
+public final class Prompts {
 
   /**
    * Create an MCP prompt to correspond with the {@code find} tool.
    *
    * @return The prompt message, wrapped as a {@link McpServerFeatures.SyncPromptSpecification}
    *     object.
-   * @see McpTools#find()
+   * @see Tools#find()
    */
   public static McpServerFeatures.SyncPromptSpecification find() {
     // Step 1: Create a prompt argument with name, description, and required flag.
@@ -50,8 +50,8 @@ public final class McpPrompts {
         (exchange, request) -> {
           // Step 4: Create a prompt message with role and content.
           Map<String, Object> arguments = request.arguments();
-          final String startPath = arguments.getOrDefault("start", StringHelper.EMPTY).toString();
-          final String nameToFind = arguments.getOrDefault("name", StringHelper.EMPTY).toString();
+          final String startPath = arguments.getOrDefault("start", Strings.EMPTY).toString();
+          final String nameToFind = arguments.getOrDefault("name", Strings.EMPTY).toString();
           String result;
 
           if (startPath.isBlank()) {
@@ -77,7 +77,7 @@ public final class McpPrompts {
    *
    * @return The prompt message, wrapped as a {@link McpServerFeatures.SyncPromptSpecification}
    *     object.
-   * @see McpTools#read()
+   * @see Tools#read()
    */
   public static McpServerFeatures.SyncPromptSpecification read() {
     // Step 1: Create a prompt argument with name, description, and required flag.
@@ -97,7 +97,7 @@ public final class McpPrompts {
         (exchange, request) -> {
           // Step 4: Create a prompt message with role and content.
           Map<String, Object> arguments = request.arguments();
-          final String filepath = arguments.getOrDefault("path", StringHelper.EMPTY).toString();
+          final String filepath = arguments.getOrDefault("path", Strings.EMPTY).toString();
           String result;
 
           if (filepath.isBlank()) {
@@ -118,7 +118,7 @@ public final class McpPrompts {
    *
    * @return The prompt message, wrapped as a {@link McpServerFeatures.SyncPromptSpecification}
    *     object.
-   * @see McpTools#delete()
+   * @see Tools#delete()
    */
   public static McpServerFeatures.SyncPromptSpecification delete() {
     // Step 1: Create a prompt argument with name, description, and required flag.
@@ -137,7 +137,7 @@ public final class McpPrompts {
         (exchange, request) -> {
           // Step 4: Create a prompt message with role and content.
           Map<String, Object> arguments = request.arguments();
-          final String filepath = arguments.getOrDefault("path", StringHelper.EMPTY).toString();
+          final String filepath = arguments.getOrDefault("path", Strings.EMPTY).toString();
           String result;
 
           if (filepath.isBlank()) {

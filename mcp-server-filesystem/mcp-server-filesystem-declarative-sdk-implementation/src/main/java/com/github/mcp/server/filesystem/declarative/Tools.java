@@ -1,4 +1,4 @@
-package com.github.mcp.server.filesystem;
+package com.github.mcp.server.filesystem.declarative;
 
 import com.github.codeboyzhou.mcp.declarative.annotation.McpTool;
 import com.github.codeboyzhou.mcp.declarative.annotation.McpToolParam;
@@ -19,12 +19,12 @@ import org.slf4j.LoggerFactory;
  * purposes, parameter formats, and invocation conditions during reasoning processes.
  *
  * @author codeboyzhou
- * @see MyMcpPrompts
+ * @see Prompts
  */
 @McpTools
-public class MyMcpTools {
+public class Tools {
 
-  private static final Logger log = LoggerFactory.getLogger(MyMcpTools.class);
+  private static final Logger log = LoggerFactory.getLogger(Tools.class);
 
   /**
    * Create an MCP tool to search for files or directories within the filesystem hierarchy starting

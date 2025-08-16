@@ -1,4 +1,4 @@
-package com.github.mcp.server.filesystem;
+package com.github.mcp.server.filesystem.official;
 
 import com.github.mcp.server.filesystem.common.ServerInfo;
 import io.modelcontextprotocol.server.McpServer;
@@ -27,15 +27,15 @@ public class McpStdioServer {
     McpStdioServer mcpStdioServer = new McpStdioServer();
     mcpStdioServer.initialize();
     // Add resources
-    mcpStdioServer.server.addResource(McpResources.filesystem());
+    mcpStdioServer.server.addResource(Resources.filesystem());
     // Add prompts
-    mcpStdioServer.server.addPrompt(McpPrompts.find());
-    mcpStdioServer.server.addPrompt(McpPrompts.read());
-    mcpStdioServer.server.addPrompt(McpPrompts.delete());
+    mcpStdioServer.server.addPrompt(Prompts.find());
+    mcpStdioServer.server.addPrompt(Prompts.read());
+    mcpStdioServer.server.addPrompt(Prompts.delete());
     // Add tools
-    mcpStdioServer.server.addTool(McpTools.find());
-    mcpStdioServer.server.addTool(McpTools.read());
-    mcpStdioServer.server.addTool(McpTools.delete());
+    mcpStdioServer.server.addTool(Tools.find());
+    mcpStdioServer.server.addTool(Tools.read());
+    mcpStdioServer.server.addTool(Tools.delete());
   }
 
   /** Initialize the STDIO MCP server. */

@@ -1,4 +1,4 @@
-package com.github.mcp.server.filesystem;
+package com.github.mcp.server.filesystem.spring;
 
 import com.github.mcp.server.filesystem.common.FileHelper;
 import java.io.IOException;
@@ -21,9 +21,9 @@ import org.springframework.stereotype.Service;
  * @author codeboyzhou
  */
 @Service
-public class McpTools {
+public class Tools {
 
-  private static final Logger log = LoggerFactory.getLogger(McpTools.class);
+  private static final Logger log = LoggerFactory.getLogger(Tools.class);
 
   /**
    * Create an MCP tool to search for files or directories within the filesystem hierarchy starting

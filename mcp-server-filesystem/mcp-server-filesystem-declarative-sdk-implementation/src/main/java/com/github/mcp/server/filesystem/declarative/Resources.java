@@ -1,4 +1,4 @@
-package com.github.mcp.server.filesystem;
+package com.github.mcp.server.filesystem.declarative;
 
 import com.github.codeboyzhou.mcp.declarative.annotation.McpResource;
 import com.github.codeboyzhou.mcp.declarative.annotation.McpResources;
@@ -9,7 +9,7 @@ import com.github.codeboyzhou.mcp.declarative.annotation.McpResources;
  * @author codeboyzhou
  */
 @McpResources
-public class MyMcpResources {
+public class Resources {
 
   /**
    * Create an MCP resource that provides access to the filesystem. Note that this is just an

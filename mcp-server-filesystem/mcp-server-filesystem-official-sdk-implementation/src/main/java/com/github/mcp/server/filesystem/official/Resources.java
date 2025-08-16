@@ -1,4 +1,4 @@
-package com.github.mcp.server.filesystem;
+package com.github.mcp.server.filesystem.official;
 
 import io.modelcontextprotocol.server.McpServerFeatures;
 import io.modelcontextprotocol.spec.McpSchema;
@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author codeboyzhou
  */
-public final class McpResources {
+public final class Resources {
 
   /**
    * Create an MCP resource that provides access to the filesystem. Note that this is just an
