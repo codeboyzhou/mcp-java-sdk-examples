@@ -346,7 +346,7 @@ wheels = [
 
 [[package]]
 name = "fast-agent-mcp"
-version = "0.2.56"
+version = "0.2.57"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "a2a-sdk" },
@@ -375,9 +375,9 @@ dependencies = [
     { name = "tensorzero" },
     { name = "typer" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/d3/a7/e7727fbb3af5190c9d61a3412c900fcee970cf5007077cc46639e76134a5/fast_agent_mcp-0.2.56.tar.gz", hash = "sha256:1a22d9bdd0eba80d5dd46845b0d78308708b6ee4f534a92e24c851d43d998618", size = 1085297, upload-time = "2025-08-14T20:06:30.693Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ff/b7/690112df4c1f733247c2902c07a0eb70c6fbd94062e58b473784f1aa1340/fast_agent_mcp-0.2.57.tar.gz", hash = "sha256:0303f4544212c4e337dc0ccc66fca454602eee6be8b0b8035e105675a1ed677c", size = 1087946, upload-time = "2025-08-19T19:39:43.166Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ff/07/236feccbf148beb8c2a8068cc93e9fdd7972fce168b815e74042420bbff2/fast_agent_mcp-0.2.56-py3-none-any.whl", hash = "sha256:6896c710621a50d7f8b6e8e832ecd9d01ebd2e9aab2730c8ee652f0daa8d8e0e", size = 522139, upload-time = "2025-08-14T20:06:28.628Z" },
+    { url = "https://files.pythonhosted.org/packages/cc/03/d6b7267baca7e015fac25276c298876bb6ba25c9365952459b7aba164a7d/fast_agent_mcp-0.2.57-py3-none-any.whl", hash = "sha256:03c94609a41b0701e8a3163a7421135212ad1b39ead77fcc9397cee32b969b2b", size = 525151, upload-time = "2025-08-19T19:39:41.52Z" },
 ]
 
 [[package]]
@@ -698,7 +698,7 @@ dependencies = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "fast-agent-mcp", specifier = ">=0.2.56" }]
+requires-dist = [{ name = "fast-agent-mcp", specifier = ">=0.2.57" }]
 
 [[package]]
 name = "mdurl"
