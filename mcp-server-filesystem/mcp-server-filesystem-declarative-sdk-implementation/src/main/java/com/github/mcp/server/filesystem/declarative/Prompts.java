@@ -2,7 +2,6 @@ package com.github.mcp.server.filesystem.declarative;
 
 import com.github.codeboyzhou.mcp.declarative.annotation.McpPrompt;
 import com.github.codeboyzhou.mcp.declarative.annotation.McpPromptParam;
-import com.github.codeboyzhou.mcp.declarative.annotation.McpPrompts;
 
 /**
  * This class is used to define and implement some prompts of the MCP server. Generally, each {@code
@@ -17,7 +16,6 @@ import com.github.codeboyzhou.mcp.declarative.annotation.McpPrompts;
  * @author codeboyzhou
  * @see Tools
  */
-@McpPrompts
 public class Prompts {
 
   /**

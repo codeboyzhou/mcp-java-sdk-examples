@@ -1,14 +1,12 @@
 package com.github.mcp.server.filesystem.declarative;
 
 import com.github.codeboyzhou.mcp.declarative.annotation.McpResource;
-import com.github.codeboyzhou.mcp.declarative.annotation.McpResources;
 
 /**
  * This class is used to define and implement some resources of the MCP server.
  *
  * @author codeboyzhou
  */
-@McpResources
 public class Resources {
 
   /**

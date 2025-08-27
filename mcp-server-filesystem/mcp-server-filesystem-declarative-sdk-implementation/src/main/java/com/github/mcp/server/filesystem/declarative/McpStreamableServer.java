@@ -3,7 +3,7 @@ package com.github.mcp.server.filesystem.declarative;
 import com.github.codeboyzhou.mcp.declarative.McpServers;
 import com.github.codeboyzhou.mcp.declarative.annotation.McpI18nEnabled;
 import com.github.codeboyzhou.mcp.declarative.annotation.McpServerApplication;
-import com.github.codeboyzhou.mcp.declarative.server.factory.McpStreamableServerInfo;
+import com.github.codeboyzhou.mcp.declarative.server.McpStreamableServerInfo;
 import com.github.mcp.server.filesystem.common.ServerInfo;
 
 /**

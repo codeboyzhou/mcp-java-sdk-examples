@@ -2,7 +2,6 @@ package com.github.mcp.server.filesystem.declarative;
 
 import com.github.codeboyzhou.mcp.declarative.annotation.McpTool;
 import com.github.codeboyzhou.mcp.declarative.annotation.McpToolParam;
-import com.github.codeboyzhou.mcp.declarative.annotation.McpTools;
 import com.github.mcp.server.filesystem.common.FileHelper;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -21,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * @author codeboyzhou
  * @see Prompts
  */
-@McpTools
 public class Tools {
 
   private static final Logger log = LoggerFactory.getLogger(Tools.class);
