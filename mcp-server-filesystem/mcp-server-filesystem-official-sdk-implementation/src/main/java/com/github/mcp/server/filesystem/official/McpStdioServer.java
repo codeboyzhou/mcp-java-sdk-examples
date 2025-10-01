@@ -1,6 +1,7 @@
 package com.github.mcp.server.filesystem.official;
 
 import com.github.mcp.server.filesystem.common.ServerInfo;
+import io.modelcontextprotocol.json.McpJsonMapper;
 import io.modelcontextprotocol.server.McpServer;
 import io.modelcontextprotocol.server.McpSyncServer;
 import io.modelcontextprotocol.server.transport.StdioServerTransportProvider;
@@ -48,7 +49,7 @@ public class McpStdioServer {
             .build();
 
     server =
-        McpServer.sync(new StdioServerTransportProvider())
+        McpServer.sync(new StdioServerTransportProvider(McpJsonMapper.getDefault()))
             .serverInfo(ServerInfo.NAME, ServerInfo.VERSION)
             .requestTimeout(ServerInfo.REQUEST_TIMEOUT)
             .instructions(ServerInfo.INSTRUCTIONS)

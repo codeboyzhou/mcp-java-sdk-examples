@@ -1,7 +1,8 @@
 package com.github.mcp.server.filesystem.official;
 
-import com.github.codeboyzhou.mcp.declarative.util.Strings;
+import com.github.codeboyzhou.mcp.declarative.util.StringHelper;
 import com.github.mcp.server.filesystem.common.FileHelper;
+import io.modelcontextprotocol.json.McpJsonMapper;
 import io.modelcontextprotocol.server.McpServerFeatures;
 import io.modelcontextprotocol.spec.McpSchema;
 import java.io.IOException;
@@ -46,7 +47,7 @@ public final class Tools {
         McpSchema.Tool.builder()
             .name("find")
             .description("Start from the specified path and recursively search subitems.")
-            .inputSchema(schema)
+            .inputSchema(McpJsonMapper.getDefault(), schema)
             .build();
 
     // Step 3: Create a tool specification with the tool and the call function.
@@ -56,8 +57,8 @@ public final class Tools {
             (exchange, request) -> {
               // Step 4: List files and return the result.
               Map<String, Object> arguments = request.arguments();
-              final String start = arguments.getOrDefault("start", Strings.EMPTY).toString();
-              final String name = arguments.getOrDefault("name", Strings.EMPTY).toString();
+              final String start = arguments.getOrDefault("start", StringHelper.EMPTY).toString();
+              final String name = arguments.getOrDefault("name", StringHelper.EMPTY).toString();
               boolean error = false;
               String result;
 
@@ -114,7 +115,7 @@ public final class Tools {
         McpSchema.Tool.builder()
             .name("read")
             .description("Read a file or list directory contents non-recursively.")
-            .inputSchema(schema)
+            .inputSchema(McpJsonMapper.getDefault(), schema)
             .build();
 
     // Step 3: Create a tool specification with the tool and the call function.
@@ -124,7 +125,7 @@ public final class Tools {
             (exchange, request) -> {
               // Step 4: Read the path and return the result.
               Map<String, Object> arguments = request.arguments();
-              final String path = arguments.getOrDefault("path", Strings.EMPTY).toString();
+              final String path = arguments.getOrDefault("path", StringHelper.EMPTY).toString();
               boolean error = false;
               String result;
 
@@ -179,7 +180,7 @@ public final class Tools {
         McpSchema.Tool.builder()
             .name("delete")
             .description("Delete a file or directory from the filesystem.")
-            .inputSchema(schema)
+            .inputSchema(McpJsonMapper.getDefault(), schema)
             .build();
 
     // Step 3: Create a tool specification with the tool and the call function.
@@ -189,7 +190,7 @@ public final class Tools {
             (exchange, request) -> {
               // Step 4: Delete the path and return the result.
               Map<String, Object> arguments = request.arguments();
-              final String path = arguments.getOrDefault("path", Strings.EMPTY).toString();
+              final String path = arguments.getOrDefault("path", StringHelper.EMPTY).toString();
               boolean error = false;
               String result;
 

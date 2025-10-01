@@ -1,6 +1,6 @@
 package com.github.mcp.server.filesystem.official;
 
-import com.github.codeboyzhou.mcp.declarative.util.Strings;
+import com.github.codeboyzhou.mcp.declarative.util.StringHelper;
 import io.modelcontextprotocol.server.McpServerFeatures;
 import io.modelcontextprotocol.spec.McpSchema;
 import java.util.List;
@@ -50,8 +50,8 @@ public final class Prompts {
         (exchange, request) -> {
           // Step 4: Create a prompt message with role and content.
           Map<String, Object> arguments = request.arguments();
-          final String startPath = arguments.getOrDefault("start", Strings.EMPTY).toString();
-          final String nameToFind = arguments.getOrDefault("name", Strings.EMPTY).toString();
+          final String startPath = arguments.getOrDefault("start", StringHelper.EMPTY).toString();
+          final String nameToFind = arguments.getOrDefault("name", StringHelper.EMPTY).toString();
           String result;
 
           if (startPath.isBlank()) {
@@ -97,7 +97,7 @@ public final class Prompts {
         (exchange, request) -> {
           // Step 4: Create a prompt message with role and content.
           Map<String, Object> arguments = request.arguments();
-          final String filepath = arguments.getOrDefault("path", Strings.EMPTY).toString();
+          final String filepath = arguments.getOrDefault("path", StringHelper.EMPTY).toString();
           String result;
 
           if (filepath.isBlank()) {
@@ -137,7 +137,7 @@ public final class Prompts {
         (exchange, request) -> {
           // Step 4: Create a prompt message with role and content.
           Map<String, Object> arguments = request.arguments();
-          final String filepath = arguments.getOrDefault("path", Strings.EMPTY).toString();
+          final String filepath = arguments.getOrDefault("path", StringHelper.EMPTY).toString();
           String result;
 
           if (filepath.isBlank()) {
