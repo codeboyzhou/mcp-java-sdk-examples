@@ -87,7 +87,10 @@ public final class Tools {
               }
 
               McpSchema.Content content = new McpSchema.TextContent(result);
-              return new McpSchema.CallToolResult(List.of(content), error);
+              return McpSchema.CallToolResult.builder()
+                  .content(List.of(content))
+                  .isError(error)
+                  .build();
             })
         .build();
   }
@@ -159,7 +162,10 @@ public final class Tools {
               }
 
               McpSchema.Content content = new McpSchema.TextContent(result);
-              return new McpSchema.CallToolResult(List.of(content), error);
+              return McpSchema.CallToolResult.builder()
+                  .content(List.of(content))
+                  .isError(error)
+                  .build();
             })
         .build();
   }
@@ -209,7 +215,10 @@ public final class Tools {
               }
 
               McpSchema.Content content = new McpSchema.TextContent(result);
-              return new McpSchema.CallToolResult(List.of(content), error);
+              return McpSchema.CallToolResult.builder()
+                  .content(List.of(content))
+                  .isError(error)
+                  .build();
             })
         .build();
   }
