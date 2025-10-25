@@ -10,11 +10,24 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * A utility class that provides helper methods for executing shell commands. This class contains
+ * methods to execute system commands and capture their output.
+ *
+ * @author <a href="https://github.com/codeboyzhou">codeboyzhou</a>
+ */
 public final class ShellHelper {
-
+  /** Logger instance for logging command execution events and errors. */
   private static final Logger log = LoggerFactory.getLogger(ShellHelper.class);
 
-  public static List<String> execute(String... command) throws IOException {
+  /**
+   * Executes a shell command and returns its output as a list of strings.
+   *
+   * @param command the command and its arguments to execute
+   * @return a list of strings representing the command's output
+   * @throws IOException if an I/O error occurs while executing the command
+   */
+  public static List<String> exec(String... command) throws IOException {
     ProcessBuilder processBuilder = new ProcessBuilder(command);
     processBuilder.redirectErrorStream(true);
 
