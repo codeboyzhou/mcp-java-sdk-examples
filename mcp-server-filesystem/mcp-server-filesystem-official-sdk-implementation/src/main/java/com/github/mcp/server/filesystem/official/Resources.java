@@ -46,10 +46,24 @@ public final class Resources {
         resource,
         (exchange, request) -> {
           // Step 3: Return the contents of the resource.
-          McpSchema.ResourceContents contents =
-              new McpSchema.TextResourceContents(
-                  resource.uri(), resource.mimeType(), "No real contents, just an example");
-          return new McpSchema.ReadResourceResult(List.of(contents));
+          return text(resource, "No real contents, just an example");
         });
+  }
+
+  /**
+   * Creates a {@link McpSchema.ReadResourceResult} object with the given resource and text
+   * contents.
+   *
+   * @param resource The resource to include in the result.
+   * @param text The text contents to include in the result.
+   * @return A {@link McpSchema.ReadResourceResult} object with the given resource and text
+   *     contents.
+   */
+  private static McpSchema.ReadResourceResult text(McpSchema.Resource resource, String text) {
+    final String uri = resource.uri();
+    final String mimeType = resource.mimeType();
+    McpSchema.TextResourceContents contents =
+        new McpSchema.TextResourceContents(uri, mimeType, text);
+    return new McpSchema.ReadResourceResult(List.of(contents));
   }
 }

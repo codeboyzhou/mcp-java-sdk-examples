@@ -1,6 +1,5 @@
 package com.github.mcp.server.filesystem.official;
 
-import com.github.codeboyzhou.mcp.declarative.util.StringHelper;
 import com.github.mcp.server.filesystem.common.FileHelper;
 import io.modelcontextprotocol.json.McpJsonMapper;
 import io.modelcontextprotocol.server.McpServerFeatures;
@@ -57,40 +56,34 @@ public final class Tools {
             (exchange, request) -> {
               // Step 4: List files and return the result.
               Map<String, Object> arguments = request.arguments();
-              final String start = arguments.getOrDefault("start", StringHelper.EMPTY).toString();
-              final String name = arguments.getOrDefault("name", StringHelper.EMPTY).toString();
-              boolean error = false;
-              String result;
+              Object start = arguments.get("start");
+              Object name = arguments.get("name");
 
-              if (start.isBlank()) {
-                result = "Please provide a valid start path to find.";
-              } else if (Files.notExists(Path.of(start))) {
-                result = "Start path does not exist: " + start + ", stopped finding.";
-              } else if (name.isBlank()) {
-                result = "Please provide a valid file/directory name to find.";
-              } else {
-                try {
-                  List<String> paths = FileHelper.fuzzySearch(start, name);
-                  if (paths.isEmpty()) {
-                    result = String.format("No file (or directory) found with name '%s'", name);
-                  } else {
-                    result =
-                        String.format(
-                            "The following are the search results of name '%s': %s", name, paths);
-                  }
-                } catch (IOException e) {
-                  error = true;
-                  result =
-                      String.format("Error searching file: %s, %s: %s", name, e, e.getMessage());
-                  log.error(result, e);
-                }
+              if (start == null || start.toString().isBlank()) {
+                return error("Please provide a valid start path to find.");
               }
 
-              McpSchema.Content content = new McpSchema.TextContent(result);
-              return McpSchema.CallToolResult.builder()
-                  .content(List.of(content))
-                  .isError(error)
-                  .build();
+              if (name == null || name.toString().isBlank()) {
+                return error("Please provide a valid file/dir name to find.");
+              }
+
+              Path startPath = Path.of(start.toString());
+              if (Files.notExists(startPath)) {
+                return error("Start path does not exist: " + start + ", stopped finding.");
+              }
+
+              try {
+                List<String> paths = FileHelper.fuzzySearch(start.toString(), name.toString());
+                if (paths.isEmpty()) {
+                  return success(String.format("No file/dir found with name '%s'", name));
+                }
+                return success(String.format("Found files/dirs with name '%s': %s", name, paths));
+              } catch (IOException e) {
+                final String result =
+                    String.format("Error finding file/dir: %s, %s: %s", name, e, e.getMessage());
+                log.error(result, e);
+                return error(result);
+              }
             })
         .build();
   }
@@ -117,7 +110,7 @@ public final class Tools {
     McpSchema.Tool tool =
         McpSchema.Tool.builder()
             .name("read")
-            .description("Read a file or list directory contents non-recursively.")
+            .description("Read a file or list dir contents non-recursively.")
             .inputSchema(McpJsonMapper.getDefault(), schema)
             .build();
 
@@ -128,44 +121,38 @@ public final class Tools {
             (exchange, request) -> {
               // Step 4: Read the path and return the result.
               Map<String, Object> arguments = request.arguments();
-              final String path = arguments.getOrDefault("path", StringHelper.EMPTY).toString();
-              boolean error = false;
-              String result;
+              Object path = arguments.get("path");
 
-              if (path.isBlank()) {
-                result = "Please provide a valid path to read.";
-              } else {
-                Path filepath = Path.of(path);
-                if (Files.notExists(filepath)) {
-                  result = "The path does not exist: " + filepath + ", stopped reading.";
-                } else if (Files.isDirectory(filepath)) {
-                  try {
-                    List<String> paths = FileHelper.listDirectory(path);
-                    result = String.format("The directory '%s' contains: %s", path, paths);
-                  } catch (IOException e) {
-                    error = true;
-                    result =
-                        String.format(
-                            "Error reading directory: %s, %s: %s", path, e, e.getMessage());
-                    log.error(result, e);
-                  }
-                } else {
-                  try {
-                    result = FileHelper.readAsString(filepath);
-                  } catch (IOException e) {
-                    error = true;
-                    result =
-                        String.format("Error reading file: %s, %s: %s", path, e, e.getMessage());
-                    log.error(result, e);
-                  }
+              if (path == null || path.toString().isBlank()) {
+                return error("Please provide a valid path to read.");
+              }
+
+              Path filepath = Path.of(path.toString());
+              if (Files.notExists(filepath)) {
+                return error("The path does not exist: " + filepath + ", stopped reading.");
+              }
+
+              if (Files.isDirectory(filepath)) {
+                try {
+                  List<String> paths = FileHelper.listDirectory(path.toString());
+                  return success(String.format("The dir '%s' contains: %s", path, paths));
+                } catch (IOException e) {
+                  final String result =
+                      String.format("Error reading dir: %s, %s: %s", path, e, e.getMessage());
+                  log.error(result, e);
+                  return error(result);
                 }
               }
 
-              McpSchema.Content content = new McpSchema.TextContent(result);
-              return McpSchema.CallToolResult.builder()
-                  .content(List.of(content))
-                  .isError(error)
-                  .build();
+              try {
+                final String result = FileHelper.readAsString(filepath);
+                return success(result);
+              } catch (IOException e) {
+                final String result =
+                    String.format("Error reading file: %s, %s: %s", path, e, e.getMessage());
+                log.error(result, e);
+                return error(result);
+              }
             })
         .build();
   }
@@ -185,7 +172,7 @@ public final class Tools {
     McpSchema.Tool tool =
         McpSchema.Tool.builder()
             .name("delete")
-            .description("Delete a file or directory from the filesystem.")
+            .description("Delete a file or dir from the filesystem.")
             .inputSchema(McpJsonMapper.getDefault(), schema)
             .build();
 
@@ -196,30 +183,59 @@ public final class Tools {
             (exchange, request) -> {
               // Step 4: Delete the path and return the result.
               Map<String, Object> arguments = request.arguments();
-              final String path = arguments.getOrDefault("path", StringHelper.EMPTY).toString();
-              boolean error = false;
-              String result;
+              Object path = arguments.get("path");
 
-              if (path.isBlank()) {
-                result = "Please provide a valid path to delete.";
-              } else {
-                try {
-                  final boolean deleted = Files.deleteIfExists(Path.of(path));
-                  result = (deleted ? "Successfully" : "Failed to") + " deleted path: " + path;
-                } catch (IOException e) {
-                  error = true;
-                  result =
-                      String.format("Error deleting path: %s, %s: %s", path, e, e.getMessage());
-                  log.error(result, e);
-                }
+              if (path == null || path.toString().isBlank()) {
+                return error("Please provide a valid path to delete.");
               }
 
-              McpSchema.Content content = new McpSchema.TextContent(result);
-              return McpSchema.CallToolResult.builder()
-                  .content(List.of(content))
-                  .isError(error)
-                  .build();
+              try {
+                final boolean deleted = Files.deleteIfExists(Path.of(path.toString()));
+                if (deleted) {
+                  return success("Successfully deleted: " + path);
+                }
+                return error("Failed to delete: " + path);
+              } catch (IOException e) {
+                final String result =
+                    String.format("Error deleting: %s, %s: %s", path, e, e.getMessage());
+                log.error(result, e);
+                return error(result);
+              }
             })
         .build();
+  }
+
+  /**
+   * Create a {@link McpSchema.CallToolResult} object with the given result and error flag.
+   *
+   * @param result The result string to be wrapped.
+   * @param isError Whether the result indicates an error.
+   * @return The {@link McpSchema.CallToolResult} object.
+   */
+  private static McpSchema.CallToolResult result(String result, boolean isError) {
+    McpSchema.Content content = new McpSchema.TextContent(result);
+    return McpSchema.CallToolResult.builder().content(List.of(content)).isError(isError).build();
+  }
+
+  /**
+   * Create a {@link McpSchema.CallToolResult} object with the given result and set the error flag
+   * to {@code false}.
+   *
+   * @param result The result string to be wrapped.
+   * @return The {@link McpSchema.CallToolResult} object.
+   */
+  private static McpSchema.CallToolResult success(String result) {
+    return result(result, false);
+  }
+
+  /**
+   * Create a {@link McpSchema.CallToolResult} object with the given result and set the error flag
+   * to {@code true}.
+   *
+   * @param result The result string to be wrapped.
+   * @return The {@link McpSchema.CallToolResult} object.
+   */
+  private static McpSchema.CallToolResult error(String result) {
+    return result(result, true);
   }
 }

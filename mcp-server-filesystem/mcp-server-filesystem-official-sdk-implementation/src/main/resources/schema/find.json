@@ -4,15 +4,11 @@
   "properties": {
     "start": {
       "type": "string",
-      "minLength": 1,
-      "maxLength": 256,
       "description": "The starting path to search, required."
     },
     "name": {
       "type": "string",
-      "minLength": 1,
-      "maxLength": 256,
-      "description": "The name of the target file or directory to search, supports fuzzy matching, required."
+      "description": "The name of the target file or dir to search, fuzzy matching supported, required."
     }
   },
   "required": [

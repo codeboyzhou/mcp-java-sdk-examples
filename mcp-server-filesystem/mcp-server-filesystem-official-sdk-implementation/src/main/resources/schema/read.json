@@ -4,9 +4,7 @@
   "properties": {
     "path": {
       "type": "string",
-      "minLength": 1,
-      "maxLength": 256,
-      "description": "The path to read, can be a file or directory, required."
+      "description": "The path to read, can be a file or dir, required."
     }
   },
   "required": [

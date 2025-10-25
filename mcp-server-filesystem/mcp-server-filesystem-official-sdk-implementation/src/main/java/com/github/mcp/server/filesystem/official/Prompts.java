@@ -1,6 +1,5 @@
 package com.github.mcp.server.filesystem.official;
 
-import com.github.codeboyzhou.mcp.declarative.util.StringHelper;
 import io.modelcontextprotocol.server.McpServerFeatures;
 import io.modelcontextprotocol.spec.McpSchema;
 import java.util.List;
@@ -29,16 +28,16 @@ public final class Prompts {
    */
   public static McpServerFeatures.SyncPromptSpecification find() {
     // Step 1: Create a prompt argument with name, description, and required flag.
-    McpSchema.PromptArgument start =
+    McpSchema.PromptArgument argumentStart =
         new McpSchema.PromptArgument("start", "The starting path to search, required.", true);
-    McpSchema.PromptArgument name =
+    McpSchema.PromptArgument argumentName =
         new McpSchema.PromptArgument(
             "name",
-            "The name of the target file or directory to search, supports fuzzy matching, required.",
+            "The name of the target file or dir to search, supports fuzzy matching, required.",
             true);
 
     // Step 2: Create a prompt with name, description, and arguments.
-    List<McpSchema.PromptArgument> args = List.of(start, name);
+    List<McpSchema.PromptArgument> args = List.of(argumentStart, argumentName);
     McpSchema.Prompt prompt =
         new McpSchema.Prompt(
             "find", "Start from the specified path and recursively search subitems.", args);
@@ -49,25 +48,22 @@ public final class Prompts {
         (exchange, request) -> {
           // Step 4: Create a prompt message with role and content.
           Map<String, Object> arguments = request.arguments();
-          final String startPath = arguments.getOrDefault("start", StringHelper.EMPTY).toString();
-          final String nameToFind = arguments.getOrDefault("name", StringHelper.EMPTY).toString();
-          String result;
+          Object start = arguments.get(argumentStart.name());
+          Object name = arguments.get(argumentName.name());
 
-          if (startPath.isBlank()) {
-            result = "Please provide a valid start path to find.";
-          } else if (nameToFind.isBlank()) {
-            result = "Please provide a valid file/directory name to find.";
-          } else {
-            result =
-                String.format(
-                    "Call the MCP tool 'find' to search for files or directories whose name matches: '%s', starting from the specified start path: '%s'",
-                    nameToFind, startPath);
+          if (start == null || start.toString().isBlank()) {
+            return result(prompt, "Please provide a valid start path to find.");
           }
 
-          McpSchema.TextContent content = new McpSchema.TextContent(result);
-          McpSchema.PromptMessage message =
-              new McpSchema.PromptMessage(McpSchema.Role.USER, content);
-          return new McpSchema.GetPromptResult(prompt.description(), List.of(message));
+          if (name == null || name.toString().isBlank()) {
+            return result(prompt, "Please provide a valid file/dir name to find.");
+          }
+
+          final String result =
+              String.format(
+                  "Call the MCP tool 'find' to search for files or dirs whose name matches: '%s', starting from the specified path: '%s'",
+                  name, start);
+          return result(prompt, result);
         });
   }
 
@@ -80,15 +76,14 @@ public final class Prompts {
    */
   public static McpServerFeatures.SyncPromptSpecification read() {
     // Step 1: Create a prompt argument with name, description, and required flag.
-    McpSchema.PromptArgument path =
+    McpSchema.PromptArgument argumentPath =
         new McpSchema.PromptArgument(
-            "path", "The path to read, can be a file or directory, required.", true);
+            "path", "The path to read, can be a file or dir, required.", true);
 
     // Step 2: Create a prompt with name, description, and arguments.
-    List<McpSchema.PromptArgument> args = List.of(path);
+    List<McpSchema.PromptArgument> args = List.of(argumentPath);
     McpSchema.Prompt prompt =
-        new McpSchema.Prompt(
-            "read", "Read a file or list directory contents non-recursively.", args);
+        new McpSchema.Prompt("read", "Read a file or list dir contents non-recursively.", args);
 
     // Step 3: Create a prompt specification with the prompt and the prompt handler.
     return new McpServerFeatures.SyncPromptSpecification(
@@ -96,19 +91,13 @@ public final class Prompts {
         (exchange, request) -> {
           // Step 4: Create a prompt message with role and content.
           Map<String, Object> arguments = request.arguments();
-          final String filepath = arguments.getOrDefault("path", StringHelper.EMPTY).toString();
-          String result;
+          Object path = arguments.get(argumentPath.name());
 
-          if (filepath.isBlank()) {
-            result = "Please provide a valid path to read.";
-          } else {
-            result = "Call the MCP tool 'read' to read the file or directory: " + filepath;
+          if (path == null || path.toString().isBlank()) {
+            return result(prompt, "Please provide a valid path to read.");
           }
 
-          McpSchema.TextContent content = new McpSchema.TextContent(result);
-          McpSchema.PromptMessage message =
-              new McpSchema.PromptMessage(McpSchema.Role.USER, content);
-          return new McpSchema.GetPromptResult(prompt.description(), List.of(message));
+          return result(prompt, "Call the MCP tool 'read' to read the file or dir: " + path);
         });
   }
 
@@ -121,14 +110,14 @@ public final class Prompts {
    */
   public static McpServerFeatures.SyncPromptSpecification delete() {
     // Step 1: Create a prompt argument with name, description, and required flag.
-    McpSchema.PromptArgument path =
+    McpSchema.PromptArgument argumentPath =
         new McpSchema.PromptArgument(
-            "path", "The path to delete, can be a file or directory, required.", true);
+            "path", "The path to delete, can be a file or dir, required.", true);
 
     // Step 2: Create a prompt with name, description, and arguments.
-    List<McpSchema.PromptArgument> args = List.of(path);
+    List<McpSchema.PromptArgument> args = List.of(argumentPath);
     McpSchema.Prompt prompt =
-        new McpSchema.Prompt("delete", "Delete a file or directory from the filesystem.", args);
+        new McpSchema.Prompt("delete", "Delete a file or dir from the filesystem.", args);
 
     // Step 3: Create a prompt specification with the prompt and the prompt handler.
     return new McpServerFeatures.SyncPromptSpecification(
@@ -136,19 +125,26 @@ public final class Prompts {
         (exchange, request) -> {
           // Step 4: Create a prompt message with role and content.
           Map<String, Object> arguments = request.arguments();
-          final String filepath = arguments.getOrDefault("path", StringHelper.EMPTY).toString();
-          String result;
+          Object path = arguments.get(argumentPath.name());
 
-          if (filepath.isBlank()) {
-            result = "Please provide a valid path to delete.";
-          } else {
-            result = "Call the MCP tool 'delete' to delete the file or directory: " + filepath;
+          if (path == null || path.toString().isBlank()) {
+            return result(prompt, "Please provide a valid path to delete.");
           }
 
-          McpSchema.TextContent content = new McpSchema.TextContent(result);
-          McpSchema.PromptMessage message =
-              new McpSchema.PromptMessage(McpSchema.Role.USER, content);
-          return new McpSchema.GetPromptResult(prompt.description(), List.of(message));
+          return result(prompt, "Call the MCP tool 'delete' to delete the file or dir: " + path);
         });
+  }
+
+  /**
+   * Create a prompt result with the given prompt and result.
+   *
+   * @param prompt The prompt to use.
+   * @param result The result to use.
+   * @return The prompt result.
+   */
+  private static McpSchema.GetPromptResult result(McpSchema.Prompt prompt, String result) {
+    McpSchema.TextContent content = new McpSchema.TextContent(result);
+    McpSchema.PromptMessage message = new McpSchema.PromptMessage(McpSchema.Role.USER, content);
+    return new McpSchema.GetPromptResult(prompt.description(), List.of(message));
   }
 }
