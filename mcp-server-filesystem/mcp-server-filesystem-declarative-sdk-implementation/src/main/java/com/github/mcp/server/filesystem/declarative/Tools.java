@@ -33,14 +33,19 @@ public final class Tools {
    *
    * @return A list of absolute path strings for all matching entries found during the search.
    */
-  @McpTool(description = "description_for_find")
+  @McpTool(
+      title = "mcp.server.filesystem.tool.find.title",
+      description = "mcp.server.filesystem.tool.find.description")
   public String find(
       @McpToolParam(
               name = "start",
-              description = "description_for_find_param_start",
+              description = "mcp.server.filesystem.tool.find.param.start.description",
               required = true)
           String start,
-      @McpToolParam(name = "name", description = "description_for_find_param_name", required = true)
+      @McpToolParam(
+              name = "name",
+              description = "mcp.server.filesystem.tool.find.param.name.description",
+              required = true)
           String name) {
 
     if (start == null || start.isBlank()) {
@@ -52,19 +57,18 @@ public final class Tools {
     }
 
     if (name == null || name.isBlank()) {
-      return "Please provide a valid file/directory name to find.";
+      return "Please provide a valid file/dir name to find.";
     }
 
     try {
       List<String> paths = FileHelper.fuzzySearch(start, name);
       if (paths.isEmpty()) {
-        return String.format("No file (or directory) found with name '%s'", name);
-      } else {
-        return String.format("The following are the search results of name '%s': %s", name, paths);
+        return String.format("No file/dir found with name '%s'", name);
       }
+      return String.format("Found files/dirs with name '%s': %s", name, paths);
     } catch (IOException e) {
       final String result =
-          String.format("Error searching file: %s, %s: %s", name, e, e.getMessage());
+          String.format("Error finding file/dir: %s, %s: %s", name, e, e.getMessage());
       log.error(result, e);
       return result;
     }
@@ -84,9 +88,14 @@ public final class Tools {
    *     (immediate subdirectories and files) directly under the specified directory
    *     (non-recursive).
    */
-  @McpTool(description = "description_for_read")
+  @McpTool(
+      title = "mcp.server.filesystem.tool.read.title",
+      description = "mcp.server.filesystem.tool.read.description")
   public String read(
-      @McpToolParam(name = "path", description = "description_for_read_param_path", required = true)
+      @McpToolParam(
+              name = "path",
+              description = "mcp.server.filesystem.tool.read.param.path.description",
+              required = true)
           String path) {
 
     if (path == null || path.isBlank()) {
@@ -101,10 +110,10 @@ public final class Tools {
     if (Files.isDirectory(filepath)) {
       try {
         List<String> paths = FileHelper.listDirectory(path);
-        return String.format("The directory '%s' contains: %s", path, paths);
+        return String.format("The dir '%s' contains: %s", path, paths);
       } catch (IOException e) {
         final String result =
-            String.format("Error reading directory: %s, %s: %s", path, e, e.getMessage());
+            String.format("Error reading dir: %s, %s: %s", path, e, e.getMessage());
         log.error(result, e);
         return result;
       }
@@ -126,11 +135,13 @@ public final class Tools {
    * @param path The path to delete, can be a file or directory, required.
    * @return A message indicating whether the path was successfully deleted or not.
    */
-  @McpTool(description = "description_for_delete")
+  @McpTool(
+      title = "mcp.server.filesystem.tool.delete.title",
+      description = "mcp.server.filesystem.tool.delete.description")
   public String delete(
       @McpToolParam(
               name = "path",
-              description = "description_for_delete_param_path",
+              description = "mcp.server.filesystem.tool.delete.param.path.description",
               required = true)
           String path) {
 
@@ -140,10 +151,12 @@ public final class Tools {
 
     try {
       final boolean deleted = Files.deleteIfExists(Path.of(path));
-      return (deleted ? "Successfully deleted path: " : "Failed to delete path: ") + path;
+      if (deleted) {
+        return String.format("Successfully deleted: %s", path);
+      }
+      return String.format("Failed to delete: %s", path);
     } catch (IOException e) {
-      final String result =
-          String.format("Error deleting path: %s, %s: %s", path, e, e.getMessage());
+      final String result = String.format("Error deleting: %s, %s: %s", path, e, e.getMessage());
       log.error(result, e);
       return result;
     }

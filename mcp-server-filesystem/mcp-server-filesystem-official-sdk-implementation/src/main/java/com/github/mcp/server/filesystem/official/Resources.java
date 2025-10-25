@@ -36,8 +36,10 @@ public final class Resources {
         McpSchema.Resource.builder()
             .uri("file://system")
             .name("filesystem")
+            .title("Filesystem")
             .description("File system operations interface")
             .mimeType("text/plain")
+            .size(1024L)
             .annotations(new McpSchema.Annotations(List.of(McpSchema.Role.ASSISTANT), 1.0))
             .build();
 

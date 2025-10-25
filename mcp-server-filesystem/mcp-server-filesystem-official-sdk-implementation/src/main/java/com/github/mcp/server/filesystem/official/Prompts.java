@@ -29,10 +29,12 @@ public final class Prompts {
   public static McpServerFeatures.SyncPromptSpecification find() {
     // Step 1: Create a prompt argument with name, description, and required flag.
     McpSchema.PromptArgument argumentStart =
-        new McpSchema.PromptArgument("start", "The starting path to search, required.", true);
+        new McpSchema.PromptArgument(
+            "start", "starting path", "The starting path to search, required.", true);
     McpSchema.PromptArgument argumentName =
         new McpSchema.PromptArgument(
             "name",
+            "target file/dir name",
             "The name of the target file or dir to search, supports fuzzy matching, required.",
             true);
 
@@ -40,7 +42,10 @@ public final class Prompts {
     List<McpSchema.PromptArgument> args = List.of(argumentStart, argumentName);
     McpSchema.Prompt prompt =
         new McpSchema.Prompt(
-            "find", "Start from the specified path and recursively search subitems.", args);
+            "find",
+            "file/dir search",
+            "Start from the specified path and recursively search subitems.",
+            args);
 
     // Step 3: Create a prompt specification with the prompt and the prompt handler.
     return new McpServerFeatures.SyncPromptSpecification(
@@ -78,12 +83,16 @@ public final class Prompts {
     // Step 1: Create a prompt argument with name, description, and required flag.
     McpSchema.PromptArgument argumentPath =
         new McpSchema.PromptArgument(
-            "path", "The path to read, can be a file or dir, required.", true);
+            "path",
+            "target file/dir path",
+            "The path to read, can be a file or dir, required.",
+            true);
 
     // Step 2: Create a prompt with name, description, and arguments.
     List<McpSchema.PromptArgument> args = List.of(argumentPath);
     McpSchema.Prompt prompt =
-        new McpSchema.Prompt("read", "Read a file or list dir contents non-recursively.", args);
+        new McpSchema.Prompt(
+            "read", "file/dir read", "Read a file or list dir contents non-recursively.", args);
 
     // Step 3: Create a prompt specification with the prompt and the prompt handler.
     return new McpServerFeatures.SyncPromptSpecification(
@@ -112,12 +121,16 @@ public final class Prompts {
     // Step 1: Create a prompt argument with name, description, and required flag.
     McpSchema.PromptArgument argumentPath =
         new McpSchema.PromptArgument(
-            "path", "The path to delete, can be a file or dir, required.", true);
+            "path",
+            "target file/dir path",
+            "The path to delete, can be a file or dir, required.",
+            true);
 
     // Step 2: Create a prompt with name, description, and arguments.
     List<McpSchema.PromptArgument> args = List.of(argumentPath);
     McpSchema.Prompt prompt =
-        new McpSchema.Prompt("delete", "Delete a file or dir from the filesystem.", args);
+        new McpSchema.Prompt(
+            "delete", "file/dir delete", "Delete a file or dir from the filesystem.", args);
 
     // Step 3: Create a prompt specification with the prompt and the prompt handler.
     return new McpServerFeatures.SyncPromptSpecification(

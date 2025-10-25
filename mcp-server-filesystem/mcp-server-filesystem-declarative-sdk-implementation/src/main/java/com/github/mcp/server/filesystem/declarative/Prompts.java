@@ -25,16 +25,20 @@ public final class Prompts {
    * @return The prompt message
    * @see Tools#find(String, String)
    */
-  @McpPrompt(description = "description_for_find")
+  @McpPrompt(
+      title = "mcp.server.filesystem.prompt.find.title",
+      description = "mcp.server.filesystem.prompt.find.description")
   public static String find(
       @McpPromptParam(
               name = "start",
-              description = "description_for_find_param_start",
+              title = "mcp.server.filesystem.prompt.find.param.start.title",
+              description = "mcp.server.filesystem.prompt.find.param.start.description",
               required = true)
           String start,
       @McpPromptParam(
               name = "name",
-              description = "description_for_find_param_name",
+              title = "mcp.server.filesystem.prompt.find.param.name.title",
+              description = "mcp.server.filesystem.prompt.find.param.name.description",
               required = true)
           String name) {
 
@@ -43,7 +47,7 @@ public final class Prompts {
     }
 
     if (name == null || name.isBlank()) {
-      return "Please provide a valid file/directory name to find.";
+      return "Please provide a valid file/dir name to find.";
     }
 
     return String.format(
@@ -58,18 +62,21 @@ public final class Prompts {
    * @return The prompt message
    * @see Tools#read(String)
    */
-  @McpPrompt(description = "description_for_read")
+  @McpPrompt(
+      title = "mcp.server.filesystem.prompt.read.title",
+      description = "mcp.server.filesystem.prompt.read.description")
   public static String read(
       @McpPromptParam(
               name = "path",
-              description = "description_for_read_param_path",
+              title = "mcp.server.filesystem.prompt.read.param.path.title",
+              description = "mcp.server.filesystem.prompt.read.param.path.description",
               required = true)
           String path) {
 
     if (path == null || path.isBlank()) {
       return "Please provide a valid path to read.";
     }
-    return "Call the MCP tool 'read' to read the file or directory: " + path;
+    return "Call the MCP tool 'read' to read the file or dir: " + path;
   }
 
   /**
@@ -79,17 +86,20 @@ public final class Prompts {
    * @return The prompt message
    * @see Tools#delete(String)
    */
-  @McpPrompt(description = "description_for_delete")
+  @McpPrompt(
+      title = "mcp.server.filesystem.prompt.delete.title",
+      description = "mcp.server.filesystem.prompt.delete.description")
   public static String delete(
       @McpPromptParam(
               name = "path",
-              description = "description_for_delete_param_path",
+              title = "mcp.server.filesystem.prompt.delete.param.path.title",
+              description = "mcp.server.filesystem.prompt.delete.param.path.description",
               required = true)
           String path) {
 
     if (path == null || path.isBlank()) {
       return "Please provide a valid path to delete.";
     }
-    return "Call the MCP tool 'delete' to delete the file or directory: " + path;
+    return "Call the MCP tool 'delete' to delete the file or dir: " + path;
   }
 }

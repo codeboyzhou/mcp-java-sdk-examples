@@ -15,7 +15,8 @@ public final class Resources {
   @McpResource(
       uri = "file://system",
       name = "filesystem",
-      description = "filesystem_resource_description")
+      title = "mcp.server.filesystem.resource.filesystem.title",
+      description = "mcp.server.filesystem.resource.filesystem.description")
   public String filesystem() {
     return "No real contents, just an example";
   }

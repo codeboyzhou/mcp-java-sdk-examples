@@ -39,7 +39,7 @@ public class Tools {
       @ToolParam(description = "The starting path to search, required.") String start,
       @ToolParam(
               description =
-                  "The name of the target file or directory to search, supports fuzzy matching, required.")
+                  "The name of the target file or dir to search, fuzzy matching supported, required.")
           String name) {
 
     if (start == null || start.isBlank()) {
@@ -51,19 +51,18 @@ public class Tools {
     }
 
     if (name == null || name.isBlank()) {
-      return "Please provide a valid file/directory name to find.";
+      return "Please provide a valid file/dir name to find.";
     }
 
     try {
       List<String> paths = FileHelper.fuzzySearch(start, name);
       if (paths.isEmpty()) {
-        return String.format("No file (or directory) found with name '%s'", name);
-      } else {
-        return String.format("The following are the search results of name '%s': %s", name, paths);
+        return String.format("No file/dir found with name '%s'", name);
       }
+      return String.format("Found files/dirs with name '%s': %s", name, paths);
     } catch (IOException e) {
       final String result =
-          String.format("Error searching file: %s, %s: %s", name, e, e.getMessage());
+          String.format("Error finding file/dir: %s, %s: %s", name, e, e.getMessage());
       log.error(result, e);
       return result;
     }
@@ -83,10 +82,9 @@ public class Tools {
    *     (immediate subdirectories and files) directly under the specified directory
    *     (non-recursive).
    */
-  @Tool(description = "Read a file or list directory contents non-recursively.")
+  @Tool(description = "Read a file or list dir contents non-recursively.")
   public String read(
-      @ToolParam(description = "The path to read, can be a file or directory, required.")
-          String path) {
+      @ToolParam(description = "The path to read, can be a file or dir, required.") String path) {
 
     if (path == null || path.isBlank()) {
       return "Please provide a valid path to read.";
@@ -100,10 +98,10 @@ public class Tools {
     if (Files.isDirectory(filepath)) {
       try {
         List<String> paths = FileHelper.listDirectory(path);
-        return String.format("The directory '%s' contains: %s", path, paths);
+        return String.format("The dir '%s' contains: %s", path, paths);
       } catch (IOException e) {
         final String result =
-            String.format("Error reading directory: %s, %s: %s", path, e, e.getMessage());
+            String.format("Error reading dir: %s, %s: %s", path, e, e.getMessage());
         log.error(result, e);
         return result;
       }
@@ -125,10 +123,9 @@ public class Tools {
    * @param path The path to delete, can be a file or directory, required.
    * @return A message indicating whether the path was successfully deleted or not.
    */
-  @Tool(description = "Delete a file or directory from the filesystem.")
+  @Tool(description = "Delete a file or dir from the filesystem.")
   public String delete(
-      @ToolParam(description = "The path to delete, can be a file or directory, required.")
-          String path) {
+      @ToolParam(description = "The path to delete, can be a file or dir, required.") String path) {
 
     if (path == null || path.isBlank()) {
       return "Please provide a valid path to delete.";
@@ -136,10 +133,12 @@ public class Tools {
 
     try {
       final boolean deleted = Files.deleteIfExists(Path.of(path));
-      return (deleted ? "Successfully deleted path: " : "Failed to delete path: ") + path;
+      if (deleted) {
+        return "Successfully deleted: " + path;
+      }
+      return "Failed to delete: " + path;
     } catch (IOException e) {
-      final String result =
-          String.format("Error deleting path: %s, %s: %s", path, e, e.getMessage());
+      final String result = String.format("Error deleting: %s, %s: %s", path, e, e.getMessage());
       log.error(result, e);
       return result;
     }

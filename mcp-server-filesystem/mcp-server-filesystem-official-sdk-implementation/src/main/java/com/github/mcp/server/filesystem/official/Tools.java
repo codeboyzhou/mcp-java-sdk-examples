@@ -45,6 +45,7 @@ public final class Tools {
     McpSchema.Tool tool =
         McpSchema.Tool.builder()
             .name("find")
+            .title("file/dir search")
             .description("Start from the specified path and recursively search subitems.")
             .inputSchema(McpJsonMapper.getDefault(), schema)
             .build();
@@ -110,6 +111,7 @@ public final class Tools {
     McpSchema.Tool tool =
         McpSchema.Tool.builder()
             .name("read")
+            .title("file/dir read")
             .description("Read a file or list dir contents non-recursively.")
             .inputSchema(McpJsonMapper.getDefault(), schema)
             .build();
@@ -172,6 +174,7 @@ public final class Tools {
     McpSchema.Tool tool =
         McpSchema.Tool.builder()
             .name("delete")
+            .title("file/dir delete")
             .description("Delete a file or dir from the filesystem.")
             .inputSchema(McpJsonMapper.getDefault(), schema)
             .build();
