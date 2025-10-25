@@ -13,11 +13,10 @@ import com.github.codeboyzhou.mcp.declarative.annotation.McpPromptParam;
  * pure prompt messages are suitable for scenarios without external system interactions, such as
  * basic text generation or simple logical reasoning tasks.
  *
- * @author codeboyzhou
+ * @author <a href="https://github.com/codeboyzhou">codeboyzhou</a>
  * @see Tools
  */
-public class Prompts {
-
+public final class Prompts {
   /**
    * Create an MCP prompt to correspond with the {@code find} tool.
    *

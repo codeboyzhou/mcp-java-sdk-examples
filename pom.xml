@@ -29,7 +29,7 @@
         <!--==================== dependency versions ======================-->
         <junit5.version>5.10.2</junit5.version>
         <logback.version>1.5.18</logback.version>
-        <mcp-declarative-java-sdk.version>0.8.4</mcp-declarative-java-sdk.version>
+        <mcp-declarative-java-sdk.version>0.8.6</mcp-declarative-java-sdk.version>
         <spring-ai-starter-mcp-server.version>1.0.0</spring-ai-starter-mcp-server.version>
     </properties>
 

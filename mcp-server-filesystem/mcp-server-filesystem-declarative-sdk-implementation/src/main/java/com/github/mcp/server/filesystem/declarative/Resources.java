@@ -5,10 +5,9 @@ import com.github.codeboyzhou.mcp.declarative.annotation.McpResource;
 /**
  * This class is used to define and implement some resources of the MCP server.
  *
- * @author codeboyzhou
+ * @author <a href="https://github.com/codeboyzhou">codeboyzhou</a>
  */
-public class Resources {
-
+public final class Resources {
   /**
    * Create an MCP resource that provides access to the filesystem. Note that this is just an
    * example that how to add resource to the MCP server, so there will be no real contents returned.

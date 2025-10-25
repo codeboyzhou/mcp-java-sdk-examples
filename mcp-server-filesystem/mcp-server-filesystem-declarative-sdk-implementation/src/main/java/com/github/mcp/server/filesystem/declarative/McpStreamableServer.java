@@ -9,12 +9,11 @@ import com.github.mcp.server.filesystem.common.ServerInfo;
 /**
  * Java server implementing Model Context Protocol (MCP) for filesystem operations.
  *
- * @author codeboyzhou
+ * @author <a href="https://github.com/codeboyzhou">codeboyzhou</a>
  */
 @McpI18nEnabled
 @McpServerApplication
 public class McpStreamableServer {
-
   /** Main entry for the Streamable HTTP MCP server. */
   public static void main(String[] args) {
     McpStreamableServerInfo serverInfo =

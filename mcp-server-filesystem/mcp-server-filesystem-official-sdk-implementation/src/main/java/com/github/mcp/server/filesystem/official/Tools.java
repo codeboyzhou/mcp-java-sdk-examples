@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * @see Prompts
  */
 public final class Tools {
-
+  /** Logger instance for logging tool-related messages. */
   private static final Logger log = LoggerFactory.getLogger(Tools.class);
 
   /**

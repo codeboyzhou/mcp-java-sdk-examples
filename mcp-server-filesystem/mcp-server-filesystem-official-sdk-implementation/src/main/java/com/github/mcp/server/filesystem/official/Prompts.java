@@ -20,7 +20,6 @@ import java.util.Map;
  * @see Tools
  */
 public final class Prompts {
-
   /**
    * Create an MCP prompt to correspond with the {@code find} tool.
    *

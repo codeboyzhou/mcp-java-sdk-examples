@@ -17,11 +17,11 @@ import org.slf4j.LoggerFactory;
  * functionality descriptions and parameters with prompt templates, enabling LLMs to understand tool
  * purposes, parameter formats, and invocation conditions during reasoning processes.
  *
- * @author codeboyzhou
+ * @author <a href="https://github.com/codeboyzhou">codeboyzhou</a>
  * @see Prompts
  */
-public class Tools {
-
+public final class Tools {
+  /** Logger instance for logging tool-related messages. */
   private static final Logger log = LoggerFactory.getLogger(Tools.class);
 
   /**
