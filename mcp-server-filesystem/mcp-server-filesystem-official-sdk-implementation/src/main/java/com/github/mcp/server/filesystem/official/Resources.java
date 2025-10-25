@@ -5,15 +5,27 @@ import io.modelcontextprotocol.spec.McpSchema;
 import java.util.List;
 
 /**
- * This class is used to define and implement some resources of the MCP server.
+ * This class is used to define and implement some resources of the MCP server. It provides methods
+ * to create and configure MCP resources that can be accessed by clients.
  *
- * @author codeboyzhou
+ * @author <a href="https://github.com/codeboyzhou">codeboyzhou</a>
  */
 public final class Resources {
-
   /**
-   * Create an MCP resource that provides access to the filesystem. Note that this is just an
-   * example that how to add resource to the MCP server, so there will be no real contents returned.
+   * Creates an MCP resource that provides access to the filesystem. Note that this is just an
+   * example of how to add a resource to the MCP server, so there will be no real contents returned.
+   *
+   * <p>This method creates a resource specification with the following properties:
+   *
+   * <ul>
+   *   <li>URI: file://system
+   *   <li>Name: filesystem
+   *   <li>Description: File system operations interface
+   *   <li>MIME type: text/plain
+   *   <li>Annotations: Assistant role with priority 1.0
+   * </ul>
+   *
+   * <p>The resource includes a read handler that returns example content.
    *
    * @return The contents of the resource, wrapped as a {@link
    *     McpServerFeatures.SyncResourceSpecification} object.

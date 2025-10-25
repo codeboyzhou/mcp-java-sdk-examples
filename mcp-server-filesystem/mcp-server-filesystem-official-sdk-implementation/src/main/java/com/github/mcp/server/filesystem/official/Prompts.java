@@ -16,7 +16,7 @@ import java.util.Map;
  * pure prompt messages are suitable for scenarios without external system interactions, such as
  * basic text generation or simple logical reasoning tasks.
  *
- * @author codeboyzhou
+ * @author <a href="https://github.com/codeboyzhou">codeboyzhou</a>
  * @see Tools
  */
 public final class Prompts {
